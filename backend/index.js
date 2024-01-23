@@ -8,8 +8,10 @@ const result = dotenv.config();
 app.use(express.json());
 
 const customerRouter = require("./routes/customer");
+const categoryRouter = require("./routes/category");
 
 app.use("/customer", customerRouter);
+app.use("/category", categoryRouter);
 
 const PORT = process.env.PORT || 3000;
 
