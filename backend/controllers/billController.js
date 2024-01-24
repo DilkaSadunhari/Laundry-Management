@@ -1,4 +1,3 @@
-const { forEach } = require("underscore");
 const db = require("../helpers/db");
 
 exports.billAddController = async (req, res) => {
