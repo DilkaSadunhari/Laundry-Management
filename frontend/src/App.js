@@ -11,10 +11,17 @@ import './App.css';
 import AddCustomer from './Pages/AddCustomer/AddCustomer';
 import AddCategory from './Pages/AddCategory/AddCategory';
 import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
+
 import ViewBills from './Pages/viewBills';
 import Sidebar from "./Components/SideBar/SideBar";
 import Invoice from './Pages/Invoice'
 import Login from './Pages/LogIn';
+
+import Home from './Pages/home';
+
+// import Notification from './pages/common/Notification';
+// import Sidebar from "./Components/Sidebar";
+
 
 /*const Layout = () => {
    return (
@@ -48,6 +55,7 @@ const App = () => {
       element: <UpdateCategary />
     },
     {
+
       path: "/viewBills",
       element: <ViewBills />
     },
@@ -59,6 +67,12 @@ const App = () => {
       path: "/invoice",
       element: <Invoice />
     },
+      {
+      path: "/home",
+      element: <Home />
+    },
+    
+
     
      /*{
       path: "/",

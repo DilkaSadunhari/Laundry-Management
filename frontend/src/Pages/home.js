@@ -1,11 +1,10 @@
 import React , { useState } from 'react';
-import './AddCustomer.css'; 
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import FilterDropdown from '../Components/FilterDropdown';
+import './AddCustomer/AddCustomer.css'; 
 import { useFormik } from 'formik'
 
-//import img from '../../Components/logo.png'
-
-function AddCustomer() {
+function Home() {
 
 //----------------------------------------------------------------------------------------------------
 
@@ -58,17 +57,24 @@ const formik = useFormik({
   },
 });
 //-------------------------------------------------------------------------------------------------------------
-
+const options = ['0716589457', '077894521789', '076985423'];
   return (
     <div className="container">
-    <div className="logo-container">
-      {/* Your laundry logo component goes here */}
-      <img src="../../Components/logo.png" alt="Laundry Logo" className="logo" />
-    </div>
+    
     <Form className="custom-form" onSubmit={formik.handleSubmit}>
+
+    <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
+        <Form.Label column sm={5}>
+            Phone Number :
+        </Form.Label>
+        <Col sm={7}>
+            <FilterDropdown options={options} />
+        </Col>
+    </Form.Group>
+
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
         <Form.Label column sm={3}>
-          Name
+          Name :
         </Form.Label>
         <Col sm={9}>
         <Form.Control
@@ -88,7 +94,7 @@ const formik = useFormik({
       
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
       <Form.Label column sm={3}>
-        Phone number
+        Phone number :
       </Form.Label>
       <Col sm={9}>
         <Form.Control
@@ -105,7 +111,7 @@ const formik = useFormik({
 
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalAddress">
         <Form.Label column sm={3}>
-         Address
+         Address :
         </Form.Label>
         <Col sm={9}>
         <Form.Control
@@ -135,4 +141,4 @@ const formik = useFormik({
   );
 }
 
-export default AddCustomer;
+export default Home;
