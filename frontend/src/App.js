@@ -10,6 +10,8 @@ import './App.css';
 import AddCustomer from './Pages/AddCustomer/AddCustomer';
 import AddCategory from './Pages/AddCategory/AddCategory';
 import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
+import Home from './Pages/home';
+
 // import Notification from './pages/common/Notification';
 // import Sidebar from "./Components/Sidebar";
 
@@ -40,6 +42,11 @@ const App = () => {
       path: "/updatecategary",
       element: <UpdateCategary />
     },
+    {
+      path: "/home",
+      element: <Home />
+    },
+    
     
     // {
     //   path: "/",

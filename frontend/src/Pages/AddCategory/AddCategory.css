@@ -22,7 +22,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
+    /* font-weight: bold; */
     
   }
   
@@ -49,6 +49,14 @@ body {
   .custom-button:hover {
     background-color: #0056b3;
   }
+
+  .red-text {
+    color: rgb(14, 14, 14);
+    background-color: #fcc2c2; /* This is an example background color for red text */
+    padding: 10px; /* Add padding for better visibility */
+    border-radius: 5px; /* Add rounded corners for better appearance */
+  }
+  
 
   .logo-container {
     margin-top: auto;
