@@ -3,6 +3,7 @@ import React from 'react';
 import FilterDropdown from '../../Components/FilterDropdown';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik'
+import companyLogo from '../../images/logo.png'
 
 
 
@@ -42,11 +43,16 @@ function UpdateCategory() {
   //-------------------------------------------------------------------------------------------------------------
     const options = ['srilanka', 'srimalee', 'canada', 'Option 4', 'Option 5'];
     return (
-        <div style={{ textAlign: 'center', padding: '20px' }}>
-            <div style={{ marginBottom: '20px' }}>
-                {/* Your laundry logo component goes here */}
-                <img src="../../Components/logo.png" alt="Laundry Logo" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+        <div style={{marginTop:'30px'}}>
+   {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
+         <div className="row align-items-center mb-3"style={{marginLeft:'500px'}}>
+            <div className="col-sm-auto">
+               <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
             </div>
+            <div className="col-sm">
+              <h2>Dirty 2 Beaty Laundry</h2>
+            </div>
+        </div>
             <Form onSubmit={formik.handleSubmit} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
                 <h1 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h1>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
@@ -134,7 +140,7 @@ function UpdateCategory() {
 
                 <Row style={{ marginBottom: '0px' }}>
                     <Col style={{ textAlign: 'center' }}>
-                        <Button type="submit" style={{ borderRadius: '10px' ,  backgroundColor: '#d3d3d3'}}>ADD</Button>
+                        <Button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>ADD</Button>
                     </Col>
                 </Row>
             </Form>

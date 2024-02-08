@@ -2,6 +2,7 @@ import React , { useState } from 'react';
 import './AddCustomer.css'; 
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik'
+import companyLogo from '../../images/logo.png'
 
 //import img from '../../Components/logo.png'
 
@@ -60,11 +61,18 @@ const formik = useFormik({
 //-------------------------------------------------------------------------------------------------------------
 
   return (
-    <div className="container">
-    <div className="logo-container">
-      {/* Your laundry logo component goes here */}
-      <img src="../../Components/logo.png" alt="Laundry Logo" className="logo" />
-    </div>
+    <div className="container"style={{marginTop:'30px'}}>
+
+  {/**------------------------------------------header--------------------------------------------------------- */}
+   <div className="row align-items-center mb-3"style={{marginLeft:'400px'}}>
+        <div className="col-sm-auto">
+          <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
+        </div>
+        <div className="col-sm">
+          <h2>Dirty 2 Beaty Laundry</h2>
+        </div>
+      </div>
+  {/**--------------------------------------------------------------------------------------------------------- */}
     <Form className="custom-form" onSubmit={formik.handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
         <Form.Label column sm={3}>
@@ -124,7 +132,7 @@ const formik = useFormik({
 
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 8, offset: 4 }}>
-          <Button type="submit" className="custom-button" >ADD</Button>
+          <Button type="submit" className="custom-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }} >ADD</Button>
         </Col>
       </Form.Group>
     </Form>
