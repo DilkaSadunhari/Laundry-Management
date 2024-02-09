@@ -134,7 +134,7 @@ function UpdateCategory() {
 
                 <Row style={{ marginBottom: '0px' }}>
                     <Col style={{ textAlign: 'center' }}>
-                        <Button type="submit" style={{ borderRadius: '10px' ,  backgroundColor: '#d3d3d3'}}>ADD</Button>
+                        <button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>UPDATE</button>
                     </Col>
                 </Row>
             </Form>

@@ -69,7 +69,7 @@ const Login = () => {
                   </button>
                 </div>
                 <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
-                  <Link to="/" className="btn btn-secondary">Back</Link>
+                  <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
                 </div>
               </form>
             </div>

@@ -118,7 +118,7 @@ const formik = useFormik({
 
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 8, offset: 4 }}>
-          <Button type="submit" className="custom-button">
+          <Button type="submit" className="custom-button"style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>
             ADD
           </Button>
         </Col>
