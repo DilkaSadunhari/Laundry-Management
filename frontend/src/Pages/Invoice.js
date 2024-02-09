@@ -33,10 +33,21 @@ const Invoice = () => {
   };
 
   const handlePrint = () => {
-    if (!deliveryDate || !deliveryTime||!balance) {
-      setErrorMessage('Please enter delivery date and time before printing.');
+    let errorMessage = '';
+  
+    if (!deliveryDate || !deliveryTime) {
+      errorMessage += 'Please enter delivery date and time. ';
+    }
+  
+    if (!balance || balance === '0') {
+      errorMessage += 'Please calculate invoice balance. ';
+    }
+  
+    if (errorMessage !== '') {
+      setErrorMessage(errorMessage);
       return;
     }
+    
     window.location.reload();
   };
 
@@ -59,15 +70,28 @@ const Invoice = () => {
   };
 
   const addItem = () => {
-    const isPriceValid = !isNaN(parseFloat(price)) && isFinite(price);
-    const isQuantityValid = !isNaN(parseFloat(quantity)) && isFinite(quantity);
-
-    if (!isPriceValid || !isQuantityValid) {
-      const errorMessage = 'Invalid input. Please check your input.';
+    let errorMessage = '';
+  
+    // Validation: Category cannot be empty
+    if (!category.trim()) {
+      errorMessage += 'Please enter  category Name. ';
+    }
+  
+    // Validation: Price per unit must be a positive floating-point value
+    if (!/^\d*\.?\d+$/.test(price) || parseFloat(price) <= 0) {
+      errorMessage += 'Invalid price per unit. ';
+    }
+  
+    // Validation: Quantity must be a positive floating-point value
+    if (!/^\d*\.?\d+$/.test(quantity) || parseFloat(quantity) <= 0) {
+      errorMessage += 'You must add valid quantity. ';
+    }
+  
+    if (errorMessage !== '') {
       setErrorMessage(errorMessage);
       return;
     }
-
+  
     const totalPrice = parseFloat(price) * parseFloat(quantity);
     const newItem = {
       category,
@@ -75,14 +99,14 @@ const Invoice = () => {
       quantity: parseFloat(quantity),
       totalPrice,
     };
-
+  
     setErrorMessage('');
     setItems([...items, newItem]);
     setCategory('');
     setPrice('');
     setQuantity('');
   };
-
+  
   const deleteItem = (index) => {
     const updatedItems = items.filter((_, i) => i !== index);
     setItems(updatedItems);
@@ -98,16 +122,24 @@ const Invoice = () => {
   };
 
   const calculateBalance = () => {
-    const advancedPaymentFloat = parseFloat(advancedPayment);
-    if (isNaN(advancedPaymentFloat)) {
-      setBalance('Please enter amount of advance.');
+    // Check if totalAmount is greater than 0
+    if (totalAmount <= 0) {
+      setBalance(<p style={{ color: 'red' }}>Invalid Total amount.</p>);
       return;
     }
-
+  
+    const advancedPaymentFloat = parseFloat(advancedPayment);
+    if (isNaN(advancedPaymentFloat) || advancedPaymentFloat < 0) {
+      setBalance(<p style={{ color: 'red' }}>Please enter a valid advanced payment.</p>);
+      return;
+    }
+  
     const calculatedBalance = totalAmount - advancedPaymentFloat;
     setBalance(calculatedBalance.toFixed(2));
   };
+  
 
+    
   return (
     <div className="container mt-5">
       {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
@@ -167,10 +199,10 @@ const Invoice = () => {
         />
 
 {/*----------------------------------------Total Price------------------------------------------------------------------- */}
-        <div>Total Price: {calculateTotalItemPrice()}</div>
-
+        
+        <div>Total Price: Rs {calculateTotalItemPrice()}</div>
 {/*-------------------------------------ADD BUTTON------------------------------------------------------------------------ */}
-        <button className="btn btn-primary mt-2" onClick={addItem}>Add</button>
+        <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Add</button>
       </div>
 
 
@@ -202,7 +234,7 @@ const Invoice = () => {
 
 {/*---------------------------------------Total Amount--------------------------------------------------------------------------------------------- */}
       <div className="text-end">
-        <p>Total Amount: {totalAmount}</p>
+      <p>Total Amount: Rs {totalAmount}</p>
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
@@ -231,9 +263,9 @@ const Invoice = () => {
             style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
           />
         </div>
-        <button onClick={calculateBalance} style={{ padding: '8px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Calculate Balance</button>
+        <button onClick={calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Calculate Balance</button>
         <div style={{ marginTop: '10px' }}>
-          {balance && <p>Balance: {balance}</p>}
+          {balance && <p>Balance: Rs {balance}</p>}
         </div>
       </div>
   
