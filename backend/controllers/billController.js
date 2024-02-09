@@ -43,7 +43,7 @@ exports.billAddController = async (req, res) => {
                 if (err) {
                     return res.json({ error: err });
                 }
-                res.json("Bill added successfully");
+                res.json({ message: "Bill added successfully" ,invoice_id:orderMainId});
             });
         } catch (error) {
             // Rollback the transaction in case of an error
