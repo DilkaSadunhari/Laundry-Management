@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from '../images/logo.png'
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -29,7 +30,10 @@ const Login = () => {
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
             <div className="p-5" style={{ backgroundColor: 'lightblue', borderRadius: '15px' }}>
-              <h3 className="mb-4 text-center">DIRTY 2 BEAUTY LAUNDRY</h3>
+              <h3 className="mb-2 text-center">DIRTY 2 BEAUTY LAUNDRY</h3>
+              <div className="text-center mb-2">
+                 <img src={logo} alt="Company Logo" style={{ maxWidth: '50%', height: 'auto', textAlign: 'center' }} />
+              </div>
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
                   <input

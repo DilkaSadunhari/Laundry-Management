@@ -30,13 +30,13 @@ function Sidebar() {
               style={{ marginTop: '10px', marginInlineStart: '30px' }}>
 
               <li className="nav-item my-3">
-                <Link to="#customerSubMenu" className="nav-link text-dark fs-5" data-bs-toggle="collapse" aria-current='page'>
+                <Link to="#customerSubMenu" className="nav-link text-dark fs-6" data-bs-toggle="collapse" aria-current='page'>
                   <span className='ms-2'>Customer</span>
-                  <i className='bi bi-caret-down'></i>
+                  {/*<i className='bi bi-caret-down'></i>*/}
                 </Link>
                 <ul className="nav collapse ms-1 flex-column" id='customerSubMenu' data-bs-parent="#parentMenu">
                   <li className="nav-item">
-                    <Link to="/addcustomer" className="nav-link text-dark px-4" aria-current="page">
+                    <Link to="/addcustomer" className="nav-link text-dark px-4 fs-7" aria-current="page">
                       <i className='bi bi-file-plus'></i>Add Customer
                     </Link>
                   </li>
@@ -44,19 +44,19 @@ function Sidebar() {
               </li>
 
               <li className="nav-item mb-5">
-                <Link to="#categorySubMenu" className="nav-link text-dark  fs-5" data-bs-toggle="collapse" aria-current='page'>
+                <Link to="#categorySubMenu" className="nav-link text-dark  fs-6" data-bs-toggle="collapse" aria-current='page'>
                   <span className='ms-2'>Category</span>
-                  <i className='bi bi-caret-down'></i>
+                  {/*<i className='bi bi-caret-down'></i>*/}
                 </Link>
                 <ul className="nav collapse ms-1 flex-column" id='categorySubMenu' data-bs-parent="#parentMenu">
                   <li className="nav-item">
-                    <Link to="/addcategory" className="nav-link text-dark px-4" aria-current="page">
+                    <Link to="/addcategory" className="nav-link text-dark px-4 fs-7" aria-current="page">
                       <i className='bi bi-file-plus'></i>Add Category
                     </Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link to="/updatecategary" className="nav-link text-dark px-4" aria-current="page">
+                    <Link to="/updatecategary" className="nav-link text-dark px-4 fs-7" aria-current="page">
                       <i class="bi bi-pencil-square"></i>Update Category
                     </Link>
                   </li>

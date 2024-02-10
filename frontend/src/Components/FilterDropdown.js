@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, FormControl } from 'react-bootstrap';
+import './FilterDropdown.css'; 
 
 const FilterDropdown = ({ options }) => {
   const [filterText, setFilterText] = useState('');
@@ -22,18 +23,13 @@ const FilterDropdown = ({ options }) => {
     setFilterText('');
   };
 
-  // Custom style for the dropdown
-  const dropdownStyle = {
-    backgroundColor: 'ash', // You can replace 'ash' with your desired color
-  };
-
   return (
-    <Dropdown style={dropdownStyle}>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <Dropdown className="custom-dropdown">
+      <Dropdown.Toggle id="dropdown-basic">
         {selectedOption ? selectedOption : 'Select an option'}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className="custom-menu">
         <FormControl
           autoFocus
           className="mx-3 my-2 w-auto"

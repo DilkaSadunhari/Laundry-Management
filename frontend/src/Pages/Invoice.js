@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import FilterDropdown from '../Components/FilterDropdown';
+import Home from './home';
 
 const Invoice = () => {
   const [items, setItems] = useState([]);
@@ -138,15 +140,21 @@ const Invoice = () => {
     setBalance(calculatedBalance.toFixed(2));
   };
   
+  //must replace--------------------------
+  const options = ['0716589457', '077894521789', '076985423']; 
+  return (
 
     
-  return (
-    <div className="container mt-5">
+    <div className="container mt-4">
+
+      <div>
+        <Home/>
+      </div>
       {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
       <h1 className="text-center">Invoice Generator</h1>
 
 {/* date and time---------------------------------------------------------------------------------------------------------- */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,marginBottom:'50px'}}>
         <div style={{ marginBottom: '20px' }}>
           <h6>Current Date and Time:</h6>
           <p>{currentDateTime.toLocaleString()}</p>
@@ -172,42 +180,98 @@ const Invoice = () => {
 
 
 {/*----------------------------------------------------------------------category must be replace----------------------------------------------- */}
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Price per unit"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
+<div className="mb-3" style={{ marginBottom: '200px' }}>
+  <div className='row gx-2'>
+    <div className="col-md-6">
+      <p>Select Category :</p>
+    </div>
+    <div className="col-md-6">
+      <FilterDropdown options={options} />
+    </div>
+  </div>
+</div>
 
+<div style={{}}>
+<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
+  <div className='row'>
+    <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6">
+          <label>Category :</label>
+        </div>
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="mb-3" style={{ marginBottom: '150px' }}>
+  <div className='row'>
+    <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6">
+          <label>Price per Unit :</label>
+        </div>
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Price per unit"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="mb-3" style={{ marginBottom: '50px' }}>
+  <div className='row'>
+    <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6">
+          <label>Quantity :</label>
+        </div>
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+       
 {/*----------------------------------------Total Price------------------------------------------------------------------- */}
         
-        <div>Total Price: Rs {calculateTotalItemPrice()}</div>
+        <div style={{marginTop:'50px',marginBottom:'50px'}}>Total Price: Rs {calculateTotalItemPrice()}</div>
 {/*-------------------------------------ADD BUTTON------------------------------------------------------------------------ */}
-        <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Add</button>
-      </div>
+        <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '50px', marginBottom:'50px', cursor: 'pointer' }}>Add</button>
+      
 
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
-      <table className="table">
+      <table className="table" style={{marginTop:'50px',marginBottom:'50px'}}>
         <thead>
           <tr>
             <th>Category</th>
@@ -233,14 +297,14 @@ const Invoice = () => {
       </table>
 
 {/*---------------------------------------Total Amount--------------------------------------------------------------------------------------------- */}
-      <div className="text-end">
+      <div className="text-end"style={{marginTop:'50px',marginBottom:'50px'}}>
       <p>Total Amount: Rs {totalAmount}</p>
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
       <div>
-        <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="totalPrice">Total Price:</label>
+        <div style={{ marginBottom: '20px' }}>
+          <label htmlFor="totalPrice">Total Price   :</label>
           <input
             type="number"
             id="totalPrice"
@@ -250,8 +314,8 @@ const Invoice = () => {
             style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
           />
         </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="advancedPayment">Advanced Payment:</label>
+        <div style={{ marginBottom: '20px' }}>
+          <label htmlFor="advancedPayment" style={{paddingRight:'15px'}}>Advanced Payment:</label>
           <input
             type="number"
             id="advancedPayment"
@@ -263,18 +327,18 @@ const Invoice = () => {
             style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
           />
         </div>
-        <button onClick={calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Calculate Balance</button>
-        <div style={{ marginTop: '10px' }}>
+        <button onClick={calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Calculate Balance</button>
+        <div style={{ marginTop: '30px' }}>
           {balance && <p>Balance: Rs {balance}</p>}
         </div>
       </div>
   
   {/*-------------print Bill------------------------------------------------------------------------------------------------------------------ */}
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <button onClick={handlePrint ||calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>
+      <button onClick={handlePrint ||calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
         Print
       </button>
-    </div>
+      </div>
   );
 };
 
