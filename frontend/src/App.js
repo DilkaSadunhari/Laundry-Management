@@ -47,10 +47,10 @@ const App = () => {
       
      <div className="container-fluid">
      <div className="row">
-       <div className="col-sm">
+       <div style={{ width:"30%",alignContent:'center' }}>
              <Sidebar /> 
        </div>
-       <div className="col-4">
+          <div style={{ width: "70%" }}>
              <Outlet />
     </div>
      </div>
