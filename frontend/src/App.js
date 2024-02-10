@@ -97,7 +97,12 @@ const App = () => {
       {
         path: "/invoicepage",
         element: <InvoicePage />
+      },
+      {
+        path: "/home",
+        element: <Home />
       }
+
 
       
       
