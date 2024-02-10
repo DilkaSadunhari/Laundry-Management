@@ -3,7 +3,10 @@ import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
+
   Outlet
+
+  
  
 } from "react-router-dom";
 
@@ -12,6 +15,7 @@ import AddCustomer from './Pages/AddCustomer/AddCustomer';
 import AddCategory from './Pages/AddCategory/AddCategory';
 import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
 
+
 import ViewBills from './Pages/viewBills';
 import Sidebar from "./Components/SideBar/SideBar";
 import Invoice from './Pages/Invoice'
@@ -19,6 +23,24 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
+
+import ViewBills from './Pages/viewBills';
+import Sidebar from "./Components/SideBar/SideBar";
+import Invoice from './Pages/Invoice'
+import Login from './Pages/LogIn';
+
+/*const Layout = () => {
+   return (
+     <div className="main">
+       <div className="menu">
+         <Sidebar />
+       </div>
+       <div className="container">
+         <Outlet />
+       </div>
+     </div>
+   );
+ };*/
 
 const App = () => {
   const Layout = ({ children }) => {
@@ -40,6 +62,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
+
       element: <Layout />,
       children: [
         // {
@@ -76,6 +99,53 @@ const App = () => {
         path: "/invoicepage",
         element: <InvoicePage />
       }
+
+      element: <Sidebar />
+    },
+   {
+      path: "/addcustomer",
+      element: <AddCustomer />
+    },
+    {
+      path: "/addcategory",
+      element: <AddCategory />
+    },
+    {
+      path: "/updatecategary",
+      element: <UpdateCategary />
+    },
+    {
+      path: "/viewBills",
+      element: <ViewBills />
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/invoice",
+      element: <Invoice />
+    },
+    
+     /*{
+      path: "/",
+       element: <Layout />,
+       children: [
+         {
+           path: "AddCustomer",
+           element: <AddCustomer />
+         },
+         {
+           path: "AddCategary",
+           element: <AddCategory />
+         },
+         {
+           path: "UpdateCategary",
+           element: <UpdateCategary />
+         },
+       ]
+     },
+     */
     
   ]);
 

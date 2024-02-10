@@ -1,8 +1,13 @@
+
 import React, { useState } from 'react';
 import { Row, Col, Form, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'; 
 import companyLogo from '../../images/logo.png'; 
+
+
+//import img from '../../Components/logo.png'
+
 
 function AddCustomer() {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -67,6 +72,7 @@ function AddCustomer() {
   });
 
   return (
+
     <div className="container align-items-center " style={{marginTop:'20px'}}>
       {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
       <div className="row align-items-center  mb-3" style={{marginLeft:'350px'}}>
@@ -160,6 +166,7 @@ function AddCustomer() {
         <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
             <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
         </div>
+
     </div>
   );
 }

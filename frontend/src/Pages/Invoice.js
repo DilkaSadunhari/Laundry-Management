@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterDropdown from '../Components/FilterDropdown';
 import Home from './home';
 
+
 const Invoice = () => {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
@@ -35,6 +36,7 @@ const Invoice = () => {
   };
 
   const handlePrint = () => {
+
     let errorMessage = '';
   
     if (!deliveryDate || !deliveryTime) {
@@ -72,6 +74,7 @@ const Invoice = () => {
   };
 
   const addItem = () => {
+
     let errorMessage = '';
   
     // Validation: Category cannot be empty
@@ -93,7 +96,6 @@ const Invoice = () => {
       setErrorMessage(errorMessage);
       return;
     }
-  
     const totalPrice = parseFloat(price) * parseFloat(quantity);
     const newItem = {
       category,
@@ -101,14 +103,14 @@ const Invoice = () => {
       quantity: parseFloat(quantity),
       totalPrice,
     };
-  
+
     setErrorMessage('');
     setItems([...items, newItem]);
     setCategory('');
     setPrice('');
     setQuantity('');
   };
-  
+
   const deleteItem = (index) => {
     const updatedItems = items.filter((_, i) => i !== index);
     setItems(updatedItems);
@@ -124,6 +126,7 @@ const Invoice = () => {
   };
 
   const calculateBalance = () => {
+
     // Check if totalAmount is greater than 0
     if (totalAmount <= 0) {
       setBalance(<p style={{ color: 'red' }}>Invalid Total amount.</p>);
@@ -154,7 +157,9 @@ const Invoice = () => {
       <h1 className="text-center">Invoice Generator</h1>
 
 {/* date and time---------------------------------------------------------------------------------------------------------- */}
+
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,marginBottom:'50px'}}>
+
         <div style={{ marginBottom: '20px' }}>
           <h6>Current Date and Time:</h6>
           <p>{currentDateTime.toLocaleString()}</p>
@@ -180,6 +185,7 @@ const Invoice = () => {
 
 
 {/*----------------------------------------------------------------------category must be replace----------------------------------------------- */}
+
 <div className="mb-3" style={{ marginBottom: '200px' }}>
   <div className='row gx-2'>
     <div className="col-md-6">
@@ -272,6 +278,11 @@ const Invoice = () => {
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
       <table className="table" style={{marginTop:'50px',marginBottom:'50px'}}>
+
+
+{/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
+      <table className="table" style={{marginTop:'50px',marginBottom:'50px'}}>
+
         <thead>
           <tr>
             <th>Category</th>
@@ -297,14 +308,17 @@ const Invoice = () => {
       </table>
 
 {/*---------------------------------------Total Amount--------------------------------------------------------------------------------------------- */}
+
       <div className="text-end"style={{marginTop:'50px',marginBottom:'50px'}}>
       <p>Total Amount: Rs {totalAmount}</p>
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
       <div>
+
         <div style={{ marginBottom: '20px' }}>
           <label htmlFor="totalPrice">Total Price   :</label>
+
           <input
             type="number"
             id="totalPrice"
@@ -314,8 +328,10 @@ const Invoice = () => {
             style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
           />
         </div>
+
         <div style={{ marginBottom: '20px' }}>
           <label htmlFor="advancedPayment" style={{paddingRight:'15px'}}>Advanced Payment:</label>
+
           <input
             type="number"
             id="advancedPayment"
@@ -335,10 +351,12 @@ const Invoice = () => {
   
   {/*-------------print Bill------------------------------------------------------------------------------------------------------------------ */}
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <button onClick={handlePrint ||calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
         Print
       </button>
       </div>
+
   );
 };
 

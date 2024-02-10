@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import FilterDropdown from '../../Components/FilterDropdown';
 import { Row, Col, Form,Alert } from 'react-bootstrap';
 import { useFormik } from 'formik'
+
 import logo from '../../images/logo.png'
+
 
 
 
@@ -43,6 +45,7 @@ function UpdateCategory() {
   //-------------------------------------------------------------------------------------------------------------
     const options = ['srilanka', 'srimalee', 'canada', 'Option 4', 'Option 5'];
     return (
+<
       <div style={{marginTop:'20px'}}>
          {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
        <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
@@ -56,6 +59,9 @@ function UpdateCategory() {
 
      <div style={{ textAlign: 'center', padding: '10px' }}>
            
+=
+       
+>
             <Form onSubmit={formik.handleSubmit} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
                 <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
@@ -143,7 +149,10 @@ function UpdateCategory() {
 
                 <Row style={{ marginBottom: '0px' }}>
                     <Col style={{ textAlign: 'center' }}>
+
                         <button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Update</button>
+
+                       
                     </Col>
                 </Row>
             </Form>

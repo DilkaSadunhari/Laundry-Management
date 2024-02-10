@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png'
 
+
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
   password: yup.string().required('Password is required'),
@@ -31,9 +32,13 @@ const Login = () => {
           <div className="col-md-6 col-lg-4">
             <div className="p-5" style={{ backgroundColor: 'lightblue', borderRadius: '15px' }}>
               <h3 className="mb-2 text-center">DIRTY 2 BEAUTY LAUNDRY</h3>
+
               <div className="text-center mb-2">
                  <img src={logo} alt="Company Logo" style={{ maxWidth: '50%', height: 'auto', textAlign: 'center' }} />
               </div>
+
+                
+
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
                   <input
@@ -73,7 +78,10 @@ const Login = () => {
                   </button>
                 </div>
                 <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
+
                   <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
+
+                 
                 </div>
               </form>
             </div>
