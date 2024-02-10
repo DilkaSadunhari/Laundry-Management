@@ -11,16 +11,16 @@ function Sidebar() {
   return (
     <div className='container-fluid shadow-xl' style={{ marginTop: '20px' }}>
       <div className='row'>
-        <div className='col-auto col-sm-2 bg-white d-flex flex-column justify-content-between min-vh-100 border-end'>
+        <div className='col-4 col-sm-2 bg-white d-flex flex-column justify-content-between min-vh-100 border-end'>
 
           <div className='mt-2'>
 
             <div>
-              <div style={{ marginInlineStart: '10px' }}>
-                <h4 style={{ marginInlineStart: '20px' }}>DIRTY 2 BEAUTY </h4>
-                <h4 style={{ marginInlineStart: '50px' }}>LAUNDRY </h4>
+              <div style={{ marginInlineStart: '' }}>
+                <h4 className='text-center'  style={{ marginInlineStart: '' }}>DIRTY 2 BEAUTY </h4>
+                <h4 className='text-center' style={{ marginInlineStart: '' }}>LAUNDRY </h4>
               </div>
-              <img src={logo} alt='Logo' className='ms-2' style={{ width: '200px', paddingInlineStart: '20px' }} />
+              <img src={logo} alt='Logo' className='ms-2' style={{ width: '200px', }} />
             </div>
 
             <hr className='text-white d-none d-sm-block'></hr>
@@ -90,6 +90,9 @@ function Sidebar() {
 
           </div>
 
+        </div>
+        <div className='col-4'>
+          
         </div>
       </div>
     </div>

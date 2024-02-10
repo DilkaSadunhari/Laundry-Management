@@ -45,7 +45,7 @@ function UpdateCategory() {
   //-------------------------------------------------------------------------------------------------------------
     const options = ['srilanka', 'srimalee', 'canada', 'Option 4', 'Option 5'];
     return (
-<
+
       <div style={{marginTop:'20px'}}>
          {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
        <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
@@ -59,9 +59,9 @@ function UpdateCategory() {
 
      <div style={{ textAlign: 'center', padding: '10px' }}>
            
-=
+
        
->
+
             <Form onSubmit={formik.handleSubmit} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
                 <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
