@@ -1,11 +1,12 @@
-import React ,  { useState } from 'react';
+
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './AddCategory.css'; 
 import { useFormik } from 'formik'; 
-//import img from '../../Components/logo.png'
+import { Link } from 'react-router-dom';
+import logo from '../../images/logo.png';
 
 function AddCategary() {
 
@@ -46,11 +47,16 @@ const formik = useFormik({
 //----------------------------------------------------------------------------------------------------------
 
   return (
-    <div className="container">
-    <div className="logo-container">
-      {/* Your laundry logo component goes here */}
-      <img src="../../Components/logo.png" alt="Laundry Logo" className="logo" />
-    </div>
+    <div className="container" style={{marginTop:'20px'}}>
+    {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
+    <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
+       <div className="col-md-auto mb-3 mb-md-0 ">
+         <img src={logo} alt="Company Logo" style={{ width: '100px' }} />
+       </div>
+       <div className="col-md ">
+         <h2>Dirty 2 Beauty Laundry</h2>
+       </div>
+     </div>
     <Form className="custom-form" onSubmit={formik.handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
         <Form.Label column sm={2}>
@@ -124,6 +130,9 @@ const formik = useFormik({
         </Col>
       </Form.Group>
     </Form>
+    <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
+                  <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
+                </div>
     </div>
   );
 }

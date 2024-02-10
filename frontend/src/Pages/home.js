@@ -130,7 +130,7 @@ const options = ['0716589457', '077894521789', '076985423'];
 
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 8, offset: 4 }}>
-          <Button type="submit" className="custom-button" >ADD</Button>
+          <Button type="submit" className="custom-button"style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }} >ADD</Button>
         </Col>
       </Form.Group>
     </Form>
