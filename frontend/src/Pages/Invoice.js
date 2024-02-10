@@ -273,11 +273,6 @@ const Invoice = () => {
         <div style={{marginTop:'50px',marginBottom:'50px'}}>Total Price: Rs {calculateTotalItemPrice()}</div>
 {/*-------------------------------------ADD BUTTON------------------------------------------------------------------------ */}
         <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '50px', marginBottom:'50px', cursor: 'pointer' }}>Add</button>
-      
-
-
-{/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
-      <table className="table" style={{marginTop:'50px',marginBottom:'50px'}}>
 
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}

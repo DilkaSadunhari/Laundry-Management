@@ -3,11 +3,8 @@ import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
-
   Outlet
 
-  
- 
 } from "react-router-dom";
 
 import './App.css';
@@ -24,10 +21,6 @@ import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
 
-import ViewBills from './Pages/viewBills';
-import Sidebar from "./Components/SideBar/SideBar";
-import Invoice from './Pages/Invoice'
-import Login from './Pages/LogIn';
 
 /*const Layout = () => {
    return (
@@ -41,21 +34,27 @@ import Login from './Pages/LogIn';
      </div>
    );
  };*/
-
+ const boxStyle = {
+  width: '50%',
+  display: 'inline-block',      
+  boxSizing: 'border-box',
+  border: '1px solid #000',
+  padding: '20px'
+};
 const App = () => {
   const Layout = ({ children }) => {
     return (
-      <div className="main">
-        <div className="menu">
-          <Sidebar />
-        </div>
-        {/* <div className="container">
-          {children}
-        </div> */}
-        <div className="invoice-container">
-          <Outlet />
-        </div>
-      </div>
+      
+     <div className="container-fluid">
+     <div className="row">
+       <div className="col-sm">
+             <Sidebar /> 
+       </div>
+       <div className="col-4">
+             <Outlet />
+    </div>
+     </div>
+   </div>
     );
   };
 
@@ -100,32 +99,9 @@ const App = () => {
         element: <InvoicePage />
       }
 
-      element: <Sidebar />
-    },
-   {
-      path: "/addcustomer",
-      element: <AddCustomer />
-    },
-    {
-      path: "/addcategory",
-      element: <AddCategory />
-    },
-    {
-      path: "/updatecategary",
-      element: <UpdateCategary />
-    },
-    {
-      path: "/viewBills",
-      element: <ViewBills />
-    },
-    {
-      path: "/login",
-      element: <Login />
-    },
-    {
-      path: "/invoice",
-      element: <Invoice />
-    },
+      
+      
+    
     
      /*{
       path: "/",
@@ -154,8 +130,6 @@ const App = () => {
   );
 };
 
-
-  
 
 
 export default App;
