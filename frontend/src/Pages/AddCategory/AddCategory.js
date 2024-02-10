@@ -5,8 +5,12 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './AddCategory.css'; 
 import { useFormik } from 'formik'; 
+
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.png';
+import companyLogo from '../../images/logo.png'
+//import img from '../../Components/logo.png'
+
 
 function AddCategary() {
 
@@ -47,6 +51,7 @@ const formik = useFormik({
 //----------------------------------------------------------------------------------------------------------
 
   return (
+
     <div className="container" style={{marginTop:'20px'}}>
     {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
     <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
@@ -57,6 +62,7 @@ const formik = useFormik({
          <h2>Dirty 2 Beauty Laundry</h2>
        </div>
      </div>
+
     <Form className="custom-form" onSubmit={formik.handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
         <Form.Label column sm={2}>

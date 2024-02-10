@@ -7,6 +7,7 @@ import Login from './LogIn';
 
 
 
+
 const ViewBills = () => {
   const [data, setData] = useState([
     { id: 1, invoiceId: 1, customerId: 101, customerName: 'John Doe', total: 100 },
@@ -29,7 +30,6 @@ const ViewBills = () => {
     setData(newData);
     setSelectedRows([]);
   };
-  
 
   //must replace--------------------------
   const options = ['0716589457', '077894521789', '076985423'];
@@ -76,6 +76,7 @@ const ViewBills = () => {
     {/**-----------------------------View Bills---------------------------------------------------------------------------------------- */}
       
       <div style={{ marginTop:'50px'}} >
+
         <h5 className=" mb-4">View Bills</h5>
         <div className="table-responsive">
             <Table striped bordered hover style={{ maxWidth: '100%' }}> 
@@ -104,7 +105,9 @@ const ViewBills = () => {
                     <td>{item.customerName}</td>
                     <td>{item.total}</td>
                     <td>
+
                       <a href="./InvoicePage">View</a>
+
                     </td>
                 </tr>
                  ))}
@@ -114,16 +117,22 @@ const ViewBills = () => {
         </div>
       
       {/**------------------------------------------------Button Row--------------------------------------------------------------------------- */}
+
       <div className="row gx-2">
         <div className="col-sm justify-content-end d-flex " style={{ bottom: '20px', right: '20px' }}>
+     
             <Button onClick={handleDelete} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
               Delete
             </Button>
         </div>
+
         <div className="col-sm  " style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
             <Link to='../login' style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
               Logout
             </Link>
+
+        
+
         </div>
       </div>
 
