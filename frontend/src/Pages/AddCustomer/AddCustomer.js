@@ -4,10 +4,9 @@ import { Row, Col, Form, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'; 
 import companyLogo from '../../images/logo.png'; 
-
-
-//import img from '../../Components/logo.png'
-
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddCustomer() {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,19 +25,6 @@ function AddCustomer() {
     } else {
       setPhoneNumberError('');
     }
-  };
-
-  const onSubmit = () => {
-    if (
-      formik.errors.name ||
-      formik.errors.phoneNumber ||
-      formik.errors.address ||
-      phoneNumberError
-    ) {
-      // If there are errors in the form, do not submit
-      return;
-    }
-    formik.handleSubmit(); // Submit the formik form if there are no errors
   };
 
   const formik = useFormik({
@@ -65,11 +51,36 @@ function AddCustomer() {
 
       return errors;
     },
-    onSubmit: (values) => {
-      console.log(values);
-      window.location.reload();
-    },
+    // onSubmit: (values) => {
+    //   console.log(values);
+    //   window.location.reload();
+    // },
   });
+
+  //-----------------------------Backend connection-----------
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const nameValue = formik.values.name;
+      const addressValue = formik.values.address;
+  
+      const response = await axios.post('http://localhost:8000/customer/add', {
+        name: nameValue,
+        address: addressValue,
+        mobile: phoneNumber,
+      });
+       if (response.status === 200) {
+        toast.success('Customer added successfully');
+        formik.resetForm();
+        setPhoneNumber('');
+      } else {
+        toast.error('Failed');
+      }
+    } catch (error) {
+      toast.error('Error');
+    }
+  };
+ 
 
   return (
 
@@ -83,7 +94,7 @@ function AddCustomer() {
           <h2>Dirty 2 Beauty Laundry</h2>
         </div>
       </div>
-      <Form className="custom-form">
+      <Form className="custom-form" onSubmit={handleSubmit}>
         <h4 className='text-center mb-3'>Add Customer</h4>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
           <Form.Label column sm={3}>
@@ -143,8 +154,8 @@ function AddCustomer() {
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 8, offset: 4 }}>
             <button
-              onClick={onSubmit}
-              type="button"
+              //onClick={onSubmit}
+              type="submit"
               className="custom-button"
               style={{
                 background: 'black',
@@ -163,6 +174,7 @@ function AddCustomer() {
           </Col>
         </Form.Group>
       </Form>
+      <ToastContainer />
         <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
             <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
         </div>
