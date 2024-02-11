@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Row, Col, Form, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'; 
@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function AddCustomer() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [mobileNumbers, setMobileNumbers] = useState([]);
 
   const handlePhoneNumberChange = (e) => {
     const value = e.target.value;
@@ -63,23 +64,43 @@ function AddCustomer() {
     try {
       const nameValue = formik.values.name;
       const addressValue = formik.values.address;
+      if (mobileNumbers.includes(phoneNumber)) {
+        toast.error('Mobile Number Exist');
+      } else { 
   
       const response = await axios.post('http://localhost:8000/customer/add', {
         name: nameValue,
         address: addressValue,
         mobile: phoneNumber,
       });
-       if (response.status === 200) {
+      if (response.status === 200) {
         toast.success('Customer added successfully');
         formik.resetForm();
         setPhoneNumber('');
+         
       } else {
         toast.error('Failed');
       }
+    }
     } catch (error) {
       toast.error('Error');
     }
   };
+
+  const getNumbers = async () => {
+    const response = await axios.get('http://localhost:8000/customer/getAllMobileNumbers');
+    if (response.status === 200) {
+      let numbers = [];
+      response.data.forEach(element => {
+        numbers.push(element.mobile);
+      });
+      setMobileNumbers([...numbers]);
+    }
+  }
+
+  useEffect(() => {
+    getNumbers();
+  },[])
  
 
   return (
