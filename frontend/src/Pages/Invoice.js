@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
 
 
 
@@ -72,16 +73,16 @@ const Invoice = () => {
   const OnPrint = async () => {
     // Prepare data to send to backend
     const data = {
-      customer_id: customerID,
-      received_date: currentDate,
+      customer_id: parseInt(customerID),
+      received_date: "2024-02-10",
       received_time: currentTime,
       delivery_date: deliveryDate,
       delivery_time: deliveryTime,
-      total: totalAmount,
-      advance: advancedPayment,
-      available_balance: balance,
+      total: totalAmount.toFixed(2),
+      advance: parseFloat(advancedPayment).toFixed(2),
+      available_balance: parseFloat(balance).toFixed(2),
       items: items.map(item => ({
-        category_id: item.category_id,
+        category_id: 1,
         price_per_unit: item.price,
         qty: item.quantity,
         total: item.totalPrice
@@ -90,24 +91,29 @@ const Invoice = () => {
 
     try {
       // Send POST request to backend
-      const response = await fetch('http://localhost:8000/bill/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
 
-      // Check if request was successful
-      if (!response.ok) {
-        throw new Error('Failed to add bill');
-      }
+      axios.post("http://localhost:8000/bill/add", data).then((res) => {
+        console.log(res.data);
+      })
+      
+      // const response = await fetch('http://localhost:8000/bill/add', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(data)
+      // });
 
-      // Extract data from response
-      const responseData = await response.json();
+      // // Check if request was successful
+      // if (!response.ok) {
+      //   throw new Error('Failed to add bill');
+      // }
 
-      // Handle success response
-      console.log('Bill added successfully with ID:', responseData.invoice_id);
+      // // Extract data from response
+      // const responseData = await response.json();
+
+      // // Handle success response
+      // console.log('Bill added successfully with ID:', responseData.invoice_id);
     } catch (error) {
       // Handle error
       console.error('Error adding bill:', error.message);
