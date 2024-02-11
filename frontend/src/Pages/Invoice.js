@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterDropdown from '../Components/FilterDropdown';
-import Home from './home';
+//import Home from './home';
 
 
 const Invoice = () => {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
+  const [customerID, setcutomerID] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState('');
+  const [currentTime, setCurrentTime] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [deliveryTime, setDeliveryTime] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
@@ -18,13 +20,17 @@ const Invoice = () => {
   const advancedPaymentRef = useRef(null);
   const [advancedPayment, setAdvancedPayment] = useState('0');
   const [balance, setBalance] = useState('0');
+  
+   
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentDateTime(new Date());
+      const now = new Date();
+      setCurrentDate(now.toLocaleDateString());
+      setCurrentTime(now.toLocaleTimeString());
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); 
   }, []);
 
   const handleDateChange = (e) => {
@@ -52,8 +58,54 @@ const Invoice = () => {
       return;
     }
     
-    window.location.reload();
+   // window.location.reload();
   };
+
+  const OnPrint = async () => {
+    // Prepare data to send to backend
+    const data = {
+      customer_id: customerID,
+      received_date: currentDate,
+      received_time: currentTime,
+      delivery_date: deliveryDate,
+      delivery_time: deliveryTime,
+      total: totalAmount,
+      advance: advancedPayment,
+      available_balance: balance,
+      items: items.map(item => ({
+        category_id: item.category_id,
+        price_per_unit: item.price,
+        qty: item.quantity,
+        total: item.totalPrice
+      }))
+    };
+
+    try {
+      // Send POST request to backend
+      const response = await fetch('http://localhost:8000/bill/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      // Check if request was successful
+      if (!response.ok) {
+        throw new Error('Failed to add bill');
+      }
+
+      // Extract data from response
+      const responseData = await response.json();
+
+      // Handle success response
+      console.log('Bill added successfully with ID:', responseData.invoice_id);
+    } catch (error) {
+      // Handle error
+      console.error('Error adding bill:', error.message);
+    }
+  };
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -148,21 +200,21 @@ const Invoice = () => {
   return (
 
     
-    <div className="container mt-4">
+    <div className="container mt-4" >
 
-      <div>
+      {/*<div>
         <Home/>
-      </div>
+  </div>*/}
       {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
-      <h1 className="text-center">Invoice Generator</h1>
+      <h1 className="text-center" style={{marginTop:"100px"}}>Invoice Generator</h1>
 
 {/* date and time---------------------------------------------------------------------------------------------------------- */}
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,marginBottom:'50px'}}>
 
         <div style={{ marginBottom: '20px' }}>
-          <h6>Current Date and Time:</h6>
-          <p>{currentDateTime.toLocaleString()}</p>
+        <h6>Current Date: {currentDate}</h6>
+        <h6>Current Time: {currentTime}</h6>
         </div>
         <div style={{ marginBottom: '20px' }}>
           <h6>Delivery Date and Time:</h6>
@@ -198,6 +250,27 @@ const Invoice = () => {
 </div>
 
 <div style={{}}>
+<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
+  <div className='row'>
+    <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6">
+          <label>Customer ID :</label>
+        </div>
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Category"
+            value={customerID}
+            onChange={(e) => setcutomerID(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
   <div className='row'>
     <div className="col-md-6">
@@ -347,7 +420,7 @@ const Invoice = () => {
   {/*-------------print Bill------------------------------------------------------------------------------------------------------------------ */}
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-      <button onClick={handlePrint ||calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
+      <button onClick={(handlePrint ||calculateBalance)&&OnPrint} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
         Print
       </button>
       </div>

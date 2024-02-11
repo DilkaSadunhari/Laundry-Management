@@ -2,7 +2,8 @@ const db = require("../helpers/db");
 
 exports.billAddController = async (req, res) => {
     const { customer_id, received_date, received_time, delivery_date, delivery_time, total, advance, available_balance, items } = req.body;
-
+    console.log('reqest',req.body);
+    
     // Start a transaction
     db.beginTransaction(async (err) => {
         if (err) {
@@ -51,6 +52,7 @@ exports.billAddController = async (req, res) => {
                 res.json({ error: "Transaction failed. Changes rolled back." });
             });
         }
+       
     });
 };
 

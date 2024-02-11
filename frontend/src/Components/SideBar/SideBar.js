@@ -11,12 +11,14 @@ function Sidebar() {
   return (
     <div
       className=""
-      style={{ marginTop: "20px", width: "25%", alignContent: "center" }}
+      style={{ marginTop:'10px', width: "15%", marginLeft:"",position:'fixed', marginRight: '10px', 
+      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)', height: '700px'
+       }}
     >
       
         <div>
           <div style={{ marginInlineStart: "" }}>
-            <h4 className="text-center" style={{ marginInlineStart: "" }}>
+            <h4 className="text-center" style={{ marginTop: "20px" }}>
               DIRTY 2 BEAUTY{" "}
             </h4>
             <h4 className="text-center" style={{ marginInlineStart: "" }}>
@@ -26,8 +28,8 @@ function Sidebar() {
           <img
             src={logo}
             alt="Logo"
-            className="ms-2"
-            style={{ width: "200px" }}
+            className=" ms-auto me-auto d-block"
+            style={{ width: "150px" }}
           />
         </div>
 
@@ -36,16 +38,16 @@ function Sidebar() {
         <ul
           className="nav nav-pills flex-column"
           id="parentMenu"
-          style={{ marginTop: "10px", marginInlineStart: "30px" }}
+          style={{ marginTop: "30px", marginInlineStart: "20px" }}
         >
           <li className="nav-item my-3">
             <Link
               to="#customerSubMenu"
-              className="nav-link text-dark fs-6"
+              className="nav-link text-dark "
               data-bs-toggle="collapse"
               aria-current="page"
             >
-              <span className="ms-2">Customer</span>
+              <h5 className="ms-2">Customer</h5>
               {/*<i className='bi bi-caret-down'></i>*/}
             </Link>
             <ul
@@ -87,11 +89,11 @@ function Sidebar() {
           <li className="nav-item mb-5">
             <Link
               to="#categorySubMenu"
-              className="nav-link text-dark  fs-6"
+              className="nav-link text-dark  "
               data-bs-toggle="collapse"
               aria-current="page"
             >
-              <span className="ms-2">Category</span>
+              <h5 className="ms-2">Category</h5>
               {/*<i className='bi bi-caret-down'></i>*/}
             </Link>
             <ul
