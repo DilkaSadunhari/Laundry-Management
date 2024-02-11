@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FilterDropdown from '../Components/FilterDropdown';
+import { Dropdown, FormControl } from 'react-bootstrap';
+//import FilterDropdown from '../Components/FilterDropdown';
 import Home from './home';
 
 
 const Invoice = () => {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
+  const [type, setType] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -78,14 +80,14 @@ const Invoice = () => {
     let errorMessage = '';
   
     // Validation: Category cannot be empty
-    if (!category.trim()) {
+    /*if (!category.trim()) {
       errorMessage += 'Please enter  category Name. ';
     }
   
     // Validation: Price per unit must be a positive floating-point value
     if (!/^\d*\.?\d+$/.test(price) || parseFloat(price) <= 0) {
       errorMessage += 'Invalid price per unit. ';
-    }
+    }*/
   
     // Validation: Quantity must be a positive floating-point value
     if (!/^\d*\.?\d+$/.test(quantity) || parseFloat(quantity) <= 0) {
@@ -99,6 +101,7 @@ const Invoice = () => {
     const totalPrice = parseFloat(price) * parseFloat(quantity);
     const newItem = {
       category,
+      type,
       price: parseFloat(price),
       quantity: parseFloat(quantity),
       totalPrice,
@@ -107,6 +110,7 @@ const Invoice = () => {
     setErrorMessage('');
     setItems([...items, newItem]);
     setCategory('');
+    setType('');
     setPrice('');
     setQuantity('');
   };
@@ -143,11 +147,54 @@ const Invoice = () => {
     setBalance(calculatedBalance.toFixed(2));
   };
   
-  //must replace--------------------------
-  const options = ['0716589457', '077894521789', '076985423']; 
-  return (
+  //----------------------------------dropdown menu----------------------------
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filterText, setFilterText] = useState('');
 
-    
+  useEffect(() => {
+    // Fetch categories from your backend when the component mounts
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/category/getAllNames'); // Update with your backend API endpoint
+      const data = await response.json();
+      console.log('Fetched categories:', data);
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleCategorySelect = async (categoryId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/category/get/${categoryId}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Category Data:', data);
+      setSelectedCategory(data);
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
+  
+
+  const handleFilterChange = (e) => {
+    setFilterText(e.target.value);
+  };
+
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+//-------------------------------------------------------------------------------------------------------------
+ 
+return (
     <div className="container mt-4">
 
       <div>
@@ -192,7 +239,29 @@ const Invoice = () => {
       <p>Select Category :</p>
     </div>
     <div className="col-md-6">
-      <FilterDropdown options={options} />
+      {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
+      <div>
+      <Dropdown onSelect={handleCategorySelect}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Select Category
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <FormControl
+            type="text"
+            placeholder="Search category"
+            className="mb-2"
+            onChange={handleFilterChange}
+          />
+          {filteredCategories.map((category) => (
+            <Dropdown.Item key={category.id} eventKey={category.id}>
+              {category.name}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+            </div>
+      {/* --------------------------------------------------------------------------------------------------------- */}
     </div>
   </div>
 </div>
@@ -209,10 +278,32 @@ const Invoice = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Category"
-            value={category}
+            // placeholder="Category"
+            value={selectedCategory.name }
             onChange={(e) => setCategory(e.target.value)}
-            onKeyPress={handleKeyPress}
+            // onKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
+  <div className='row'>
+    <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6">
+          <label>Type :</label>
+        </div>
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            //placeholder="type"
+            value={selectedCategory.type }
+            onChange={(e) => setType(e.target.value)}
+            // onKeyPress={handleKeyPress}
           />
         </div>
       </div>
@@ -231,10 +322,10 @@ const Invoice = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Price per unit"
-            value={price}
+            //placeholder="Price per unit"
+            value={selectedCategory.price_per_unit }
             onChange={(e) => setPrice(e.target.value)}
-            onKeyPress={handleKeyPress}
+            // onKeyPress={handleKeyPress}
           />
         </div>
       </div>
@@ -254,7 +345,7 @@ const Invoice = () => {
             type="text"
             className="form-control"
             placeholder="Quantity"
-            value={quantity}
+            value={ quantity}
             onChange={(e) => setQuantity(e.target.value)}
             onKeyPress={handleKeyPress}
           />
@@ -263,7 +354,6 @@ const Invoice = () => {
     </div>
   </div>
 </div>
-
 </div>
 
 

@@ -4,9 +4,9 @@ exports.categoryAddController = async (req, res) => {
     const { name, type, price_per_unit } = req.body;
     db.query("insert into category(name,type,price_per_unit) values(?,?,?)", [name, type, price_per_unit], (err, result) => {
         if (err) {
-            res.json({ error: err });
-        } else {
-            res.json("Category Added");
+            res.status(500).json({ error: err });
+        } else { 
+            res.status(200).json("customer Added");
         }
     })
 }

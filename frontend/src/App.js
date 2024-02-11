@@ -20,20 +20,9 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
+//import Test from './Pages/test';
 
 
-/*const Layout = () => {
-   return (
-     <div className="main">
-       <div className="menu">
-         <Sidebar />
-       </div>
-       <div className="container">
-         <Outlet />
-       </div>
-     </div>
-   );
- };*/
  const boxStyle = {
   width: '50%',
   display: 'inline-block',      
@@ -101,33 +90,12 @@ const App = () => {
       {
         path: "/home",
         element: <Home />
-      }
-
-
-      
-      
-    
-    
-     /*{
-      path: "/",
-       element: <Layout />,
-       children: [
-         {
-           path: "AddCustomer",
-           element: <AddCustomer />
-         },
-         {
-           path: "AddCategary",
-           element: <AddCategory />
-         },
-         {
-           path: "UpdateCategary",
-           element: <UpdateCategary />
-         },
-       ]
-     },
-     */
-    
+      },
+      // {
+      //   path: "/test",
+      //   element: <Test />
+      // },
+             
   ]);
 
   return (
