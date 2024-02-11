@@ -4,9 +4,9 @@ exports.customerAddController = async (req, res) => {
     const { name, address, mobile } = req.body;
     db.query("insert into customer(name,address,mobile) values(?,?,?)", [name, address, mobile], (err, result) => {
         if (err) {
-            res.json({ error: err });
+            res.status(500).json({ error: err });
         } else { 
-            res.json("customer Added");
+            res.status(200).json("customer Added");
         }
     })
 }

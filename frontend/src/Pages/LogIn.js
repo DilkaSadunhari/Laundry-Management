@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate  } from 'react-router-dom'; 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png'
-
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -13,17 +15,45 @@ const validationSchema = yup.object({
 
 
 const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: values => {
-      // Handle login logic (e.g., API call, authentication)
-      console.log('Login submitted with:', values);
-    },
-    validationSchema: validationSchema,
-  });
+    validationSchema: validationSchema
+    }
+  );
+  //-----------------------------------Backend connection-----------------------------------------------------------------------
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const usernameValue = formik.values.username;
+    const passwordValue = formik.values.password;
+    
+    const response = await axios.post('http://localhost:8000/login/login/', {
+      username: usernameValue,
+      password: passwordValue,
+    });
+     if (response.status === 200) {
+      //toast.success('Category added successfully');
+      //formik.resetForm();
+     
+      console.log('Login successful:', response.data);
+      navigate('/viewBills');
+      
+    } else{
+      if (response.status === 401){
+      toast.error('Login Details are Incorrected');} 
+      else{
+        if (response.status === 404){
+          toast.error('User not found');}
+      }
+    }
+  } catch (error) {
+    toast.error('Error');
+  }
+};
 
   return (
     <div className="mt-5">
@@ -39,7 +69,7 @@ const Login = () => {
 
                 
 
-              <form onSubmit={formik.handleSubmit}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -84,6 +114,7 @@ const Login = () => {
                  
                 </div>
               </form>
+              <ToastContainer />
             </div>
           </div>
         </div>
