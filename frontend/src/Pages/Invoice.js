@@ -207,7 +207,7 @@ const Invoice = () => {
   
   //----------------------------------dropdown menu----------------------------
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState({});
   const [filterText, setFilterText] = useState('');
 
 
