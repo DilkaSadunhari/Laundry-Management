@@ -240,6 +240,8 @@ const Invoice = () => {
       const data = await response.json();
       console.log('Category Data:', data);
       setSelectedCategory(data);
+      setPrice(data.price);
+      setCategory(data.name);
     } catch (error) {
       console.error('Error fetching category data:', error);
     }
@@ -406,7 +408,7 @@ return (
             type="text"
             className="form-control"
             //placeholder="Price per unit"
-            value={selectedCategory.price_per_unit }
+            value={selectedCategory.price }
             onChange={(e) => setPrice(e.target.value)}
             // onKeyPress={handleKeyPress}
           />
