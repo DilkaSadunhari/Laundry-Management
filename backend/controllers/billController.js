@@ -163,7 +163,7 @@ exports.billAddController = async (req, res) => {
                             const disclaimer2 = "after 1 month for any losses";
 
                             // Footer
-                            const footer = "@ 2024 Code with X  / 077 59 64 727";
+                            const footer = "(c) 2024 Code with X  / 077 59 64 727";
 
                             for (let i = 0; i < bill_count; i++) {
 
