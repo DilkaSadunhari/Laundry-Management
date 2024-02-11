@@ -34,6 +34,9 @@ const handleSubmit = async (e) => {
     const response = await axios.post('http://localhost:8000/login/login/', {
       username: usernameValue,
       password: passwordValue,
+    }, {
+      withCredentials: true,
+      credentials: "include",
     });
      if (response.status === 200) {
       //toast.success('Category added successfully');
