@@ -188,9 +188,11 @@ exports.billAddController = async (req, res) => {
                                     .text(mobileNumber2) // Mobile numbers
                                     .text(workingHours) // Working hours
                                     .text("-".repeat(48))
+                                    .style("B")
                                     .text(invoiceNumber) // Invoice details
                                     .text(receivedDateTime)
                                     .text(deliveredDateTime)
+                                    .style("NORMAL")
                                     .text("-".repeat(48))
                                     .text(customerName) // Customer details
                                     .text(customerPhone)
@@ -245,9 +247,11 @@ exports.billAddController = async (req, res) => {
                                     .font("a")
                                     .align("ct")
                                     .text("-".repeat(48))
+                                    .style("B")
                                     .text(`Total Amount: ${fullTotal.toFixed(2)}`)
                                     .text(`Advance Payment: ${advancePayment.toFixed(2)}`)
                                     .text(`Remaining Balance: ${remainingPayment.toFixed(2)}`)
+                                    .style("NORMAL")
                                     .text("-".repeat(48))
                                     .text(thankYouMessage)
                                     .text("-".repeat(48))
