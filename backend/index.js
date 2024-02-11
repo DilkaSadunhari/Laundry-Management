@@ -6,6 +6,11 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const result = dotenv.config();
+
+
+
+
+
 app.use(cors(
     {
         origin: ["http://localhost:3000"],
@@ -13,6 +18,7 @@ app.use(cors(
         credentials: true
     }
 ))
+
 app.use(express.json());
 app.use(cookieParser());
 
