@@ -25,7 +25,7 @@ exports.categoryUpdateController = async (req, res) => {
 
 exports.categoryGetController = async (req, res) => {
     const id = req.params.id;
-    db.query("select name, type ,price_per_unit from category where id=? ", [id], (err, result) => {
+    db.query("select name, type ,price_per_unit as price from category where id=? ", [id], (err, result) => {
         if (err) {
             res.json({ error: err });
         } else {
