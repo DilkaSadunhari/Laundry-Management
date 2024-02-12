@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-
-
-
 import { Dropdown, FormControl } from 'react-bootstrap';
 //import FilterDropdown from '../Components/FilterDropdown';
 import Home from './home';
@@ -12,11 +9,8 @@ import Home from './home';
 const Invoice = () => {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
-
   const [customerID, setcutomerID] = useState('');
-
   const [type, setType] = useState('');
-
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
