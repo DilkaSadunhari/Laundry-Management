@@ -13,8 +13,9 @@
     "nmp": "^1.0.3",
     "nodemailer": "^6.9.8",
     "nodemon": "^3.0.3",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
-    "underscore": "^1.13.6"
+    "underscore": "^1.13.6",
+    "@dodoga/escpos-core": "^0.0.5",
+    "@node-escpos/core": "^0.5.0",
+    "@node-escpos/usb-adapter": "^0.3.1"
   }
 }
