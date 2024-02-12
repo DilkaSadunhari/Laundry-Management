@@ -5,6 +5,7 @@ const { join } = require("path");
 const bill_count = 1;
 
 exports.billAddController = async (req, res) => {
+
     const {
         customer_id,
         received_date,
@@ -19,6 +20,11 @@ exports.billAddController = async (req, res) => {
 
     let customerData = {};
     let resultDetails = [];
+
+    const { customer_id, received_date, received_time, delivery_date, delivery_time, total, advance, available_balance, items } = req.body;
+    console.log('reqest',req.body);
+    
+
     // Start a transaction
     db.beginTransaction(async (err) => {
         if (err) {
@@ -305,6 +311,7 @@ exports.billAddController = async (req, res) => {
                 res.json({ error: "Transaction failed. Changes rolled back." });
             });
         }
+       
     });
 };
 
@@ -361,6 +368,7 @@ exports.billGetAllByInvoiceAndMobileController = async (req, res) => {
 
 exports.billGetMainDetailsByIdController = async (req, res) => {
     const id = req.params.id;
+
     db.query(
         "select order_main.id as invoice_id,DATE_FORMAT(STR_TO_DATE(order_main.received_date, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d') AS received_date,order_main.received_time, DATE_FORMAT(STR_TO_DATE(order_main.delivery_date, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d') AS delivery_date, order_main.delivery_time, order_main.total, order_main.advance, order_main.available_balance,customer.name as Customer_name,customer.mobile as Customer_mobile,customer.address from order_main JOIN customer ON order_main.customer_id = customer.id where order_main.id=?",
         [id],
@@ -370,6 +378,14 @@ exports.billGetMainDetailsByIdController = async (req, res) => {
             } else {
                 res.json(result);
             }
+
+    db.query("select order_main.id as invoice_id,DATE_FORMAT(STR_TO_DATE(order_main.received_date, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d') AS received_date,order_main.received_time, DATE_FORMAT(STR_TO_DATE(order_main.delivery_date, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d') AS delivery_date, order_main.delivery_time, order_main.total, order_main.advance, order_main.available_balance,customer.name as Customer_name,customer.mobile as Customer_mobile,customer.address from order_main JOIN customer ON order_main.customer_id = customer.id where order_main.id=?", [id], (err, result) => {
+        if (err) {
+            res.json({ error: err });
+        } else {
+            res.json(result);
+            
+
         }
     );
 };

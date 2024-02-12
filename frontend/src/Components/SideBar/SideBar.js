@@ -1,35 +1,68 @@
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/js/dist/collapse';
-import './sidemenubar.css';
-import '../../Pages/AddCategory/AddCategory';
-import '../../Pages/AddCustomer/AddCustomer';
-import '../../Pages/UpdateCategary/UpdateCategary';
-import { Link } from 'react-router-dom';
-import logo from '../../images/logo.png';
+import "bootstrap/js/dist/dropdown";
+import "bootstrap/js/dist/collapse";
+import "./sidemenubar.css";
+import "../../Pages/AddCategory/AddCategory";
+import "../../Pages/AddCustomer/AddCustomer";
+import "../../Pages/UpdateCategary/UpdateCategary";
+import { Link } from "react-router-dom";
+import logo from "../../images/logo.png";
 
 function Sidebar() {
   return (
-    <div className='container-fluid shadow-xl'style={{marginTop:'20px'}}>
-      <div className='row show-xl'>
-        <div className='col-auto col-sm-2 bg-white d-flex flex-column justify-content-between min-vh-100 border-end'>
-          
-          <div className='mt-2'>
-            
-            <div>
-              <div style={{marginInlineStart:'10px'}}>
-                <h4 style={{marginInlineStart:'20px'}} >DIRTY 2 BEAUTY </h4>
-                <h4 style={{marginInlineStart:'50px'}} >LAUNDRY </h4>
-              </div>
-              <img src={logo} alt='Logo' className='ms-2'style={{ width: '200px',paddingInlineStart:'20px' }} />
-            </div>
+    <div
+      className=""
+      style={{ marginTop:'10px', width: "15%", marginLeft:"",position:'fixed', marginRight: '10px', 
+      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)', height: '700px'
+       }}
+    >
+      
+        <div>
+          <div style={{ marginInlineStart: "" }}>
+            <h4 className="text-center" style={{ marginTop: "20px" }}>
+              DIRTY 2 BEAUTY{" "}
+            </h4>
+            <h4 className="text-center" style={{ marginInlineStart: "" }}>
+              LAUNDRY{" "}
+            </h4>
+          </div>
+          <img
+            src={logo}
+            alt="Logo"
+            className=" ms-auto me-auto d-block"
+            style={{ width: "150px" }}
+          />
+        </div>
 
-            <hr className='text-white d-none d-sm-block'></hr>
-            
-            <ul className="nav nav-pills flex-column" 
-                id='parentMenu'
-                style={{marginTop:'10px', marginInlineStart:'30px'}}>
+        <hr className="text-white d-none d-sm-block"></hr>
 
-              {/*<li className="nav-item mt-5">
+        <ul
+          className="nav nav-pills flex-column"
+          id="parentMenu"
+          style={{ marginTop: "30px", marginInlineStart: "20px" }}
+        >
+          <li className="nav-item my-3">
+            <Link
+              to="#customerSubMenu"
+              className="nav-link text-dark "
+              data-bs-toggle="collapse"
+              aria-current="page"
+            >
+              <h5 className="ms-2">Customer</h5>
+              {/*<i className='bi bi-caret-down'></i>*/}
+            </Link>
+            <ul
+              className="nav collapse ms-1 flex-column"
+              id="customerSubMenu"
+              data-bs-parent="#parentMenu"
+            >
+              <li className="nav-item">
+                <Link
+                  to="/addcustomer"
+                  className="nav-link text-dark px-4 fs-7"
+                  aria-current="page"
+                >
+                  <i className="bi bi-file-plus"></i>Add Customer
+                  {/*<li className="nav-item mt-5">
                 <Link to="#billsSubMenu" 
                       className="nav-link text-dark fs-5" 
                       data-bs-toggle="collapse" 
@@ -48,49 +81,50 @@ function Sidebar() {
 
                 </ul>
                </li>*/}
-
-              <li className="nav-item my-3 ">
-                <Link to="#customerSubMenu" className="nav-link text-dark fs-5" data-bs-toggle="collapse" aria-current='page'>
-                 
-                  <span className='ms-2'>Customer</span>
-                  <i className='bi bi-caret-down'></i>
                 </Link>
-                <ul className="nav collapse ms-1 flex-column" id='customerSubMenu' data-bs-parent="#parentMenu">
-                  <li className="nav-item">
-                    <Link to="/addcustomer" className="nav-link text-dark px-4"  aria-current="page">
-                     <i className='bi bi-file-plus'></i>Add Customer
-                    </Link>
-                  </li>
-                </ul>
               </li>
-
-              <li className="nav-item  mb-5">
-                <Link to="#categorySubMenu" className="nav-link text-dark  fs-5" data-bs-toggle="collapse" aria-current='page'>
-                  <span className='ms-2'>Category</span>
-                  <i className='bi bi-caret-down'></i>
-                </Link>
-                <ul className="nav collapse ms-1 flex-column" id='categorySubMenu' data-bs-parent="#parentMenu">
-                  <li className="nav-item">
-                  <Link to="/addcategory" className="nav-link text-dark px-4"  aria-current="page">
-                     <i className='bi bi-file-plus'></i>Add Category
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link to="/updatecategary" className="nav-link text-dark px-4" aria-current="page">
-                     <i class="bi bi-pencil-square"></i>Edit Category
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
             </ul>
+          </li>
 
-          </div>
-          
-        </div>
+          <li className="nav-item mb-5">
+            <Link
+              to="#categorySubMenu"
+              className="nav-link text-dark  "
+              data-bs-toggle="collapse"
+              aria-current="page"
+            >
+              <h5 className="ms-2">Category</h5>
+              {/*<i className='bi bi-caret-down'></i>*/}
+            </Link>
+            <ul
+              className="nav collapse ms-1 flex-column"
+              id="categorySubMenu"
+              data-bs-parent="#parentMenu"
+            >
+              <li className="nav-item">
+                <Link
+                  to="/addcategory"
+                  className="nav-link text-dark px-4 fs-7"
+                  aria-current="page"
+                >
+                  <i className="bi bi-file-plus"></i>Add Category
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link
+                  to="/updatecategary"
+                  className="nav-link text-dark px-4 fs-7"
+                  aria-current="page"
+                >
+                  <i class="bi bi-pencil-square"></i>Update Category
+                </Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
-    </div>
+  
   );
 }
 

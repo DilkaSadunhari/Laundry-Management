@@ -18,7 +18,7 @@ exports.userLoginController = async (req, res) => {
                         maxAge: 60 * 60 * 24 * 30,
                         httpOnly: false,
                         sameSite: 'none',
-                        secure: true,
+                        secure: true, 
                     });
                     return res.status(200).json({ message: 'Login successful', token: accessToken });
                 } else {

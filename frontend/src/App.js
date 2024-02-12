@@ -3,88 +3,106 @@ import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
-  
- 
+  Outlet
+
 } from "react-router-dom";
 
 import './App.css';
 import AddCustomer from './Pages/AddCustomer/AddCustomer';
 import AddCategory from './Pages/AddCategory/AddCategory';
 import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
+
+
 import ViewBills from './Pages/viewBills';
 import Sidebar from "./Components/SideBar/SideBar";
 import Invoice from './Pages/Invoice'
 import Login from './Pages/LogIn';
+import InvoicePage from './Pages/InvoicePage';
 
-/*const Layout = () => {
-   return (
-     <div className="main">
-       <div className="menu">
-         <Sidebar />
-       </div>
-       <div className="container">
-         <Outlet />
-       </div>
-     </div>
-   );
- };*/
+import Home from './Pages/home';
+//import Test from './Pages/test';
 
+
+ const boxStyle = {
+  width: '50%',
+  display: 'inline-block',      
+  boxSizing: 'border-box',
+  border: '1px solid #000',
+  padding: '20px'
+};
 const App = () => {
+  const Layout = ({ children }) => {
+    return (
+      
+     <div className="container-fluid">
+     <div className="row">
+       <div style={{ width:"30%",alignContent:'center' }}>
+             <Sidebar /> 
+       </div>
+          <div style={{ width: "70%" }}>
+             <Outlet />
+    </div>
+     </div>
+   </div>
+    );
+  };
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Sidebar />
-    },
-   {
-      path: "/addcustomer",
-      element: <AddCustomer />
-    },
-    {
-      path: "/addcategory",
-      element: <AddCategory />
-    },
-    {
-      path: "/updatecategary",
-      element: <UpdateCategary />
-    },
-    {
-      path: "/viewBills",
-      element: <ViewBills />
-    },
-    {
-      path: "/login",
-      element: <Login />
-    },
-    {
-      path: "/invoice",
-      element: <Invoice />
-    },
-    
-     /*{
-      path: "/",
-       element: <Layout />,
-       children: [
-         {
-           path: "AddCustomer",
-           element: <AddCustomer />
-         },
-         {
-           path: "AddCategary",
-           element: <AddCategory />
-         },
-         {
-           path: "UpdateCategary",
-           element: <UpdateCategary />
-         },
-       ]
-     },
-     */
-    
+
+      element: <Layout />,
+      children: [
+        // {
+        //   path: "/",
+        //   element: <Home />
+        // },
+        {
+          path: "/",
+          element: <Invoice />
+        },
+        
+      ]},
+      {
+        path: "/addcustomer",
+        element: <AddCustomer />
+      },
+      {
+        path: "/addcategory",
+        element: <AddCategory />
+      },
+      {
+        path: "/updatecategary",
+        element: <UpdateCategary />
+      },
+      {
+        path: "/viewBills",
+        element: <ViewBills />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/invoicepage",
+        element: <InvoicePage />
+      },
+      {
+        path: "/home",
+        element: <Home />
+      },
+      // {
+      //   path: "/test",
+      //   element: <Test />
+      // },
+             
   ]);
 
   return (
     <RouterProvider router={router} />
   );
 };
+
+
 
 export default App;

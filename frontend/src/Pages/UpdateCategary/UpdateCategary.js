@@ -1,9 +1,11 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import FilterDropdown from '../../Components/FilterDropdown';
-import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Form,Alert } from 'react-bootstrap';
 import { useFormik } from 'formik'
-import companyLogo from '../../images/logo.png'
+
+import logo from '../../images/logo.png'
+
 
 
 
@@ -43,18 +45,25 @@ function UpdateCategory() {
   //-------------------------------------------------------------------------------------------------------------
     const options = ['srilanka', 'srimalee', 'canada', 'Option 4', 'Option 5'];
     return (
-        <div style={{marginTop:'30px'}}>
-   {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
-         <div className="row align-items-center mb-3"style={{marginLeft:'500px'}}>
-            <div className="col-sm-auto">
-               <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
-            </div>
-            <div className="col-sm">
-              <h2>Dirty 2 Beaty Laundry</h2>
-            </div>
-        </div>
+
+      <div style={{marginTop:'20px'}}>
+         {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
+       <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
+       <div className="col-md-auto mb-3 mb-md-0 ">
+         <img src={logo} alt="Company Logo" style={{ width: '100px' }} />
+       </div>
+       <div className="col-md ">
+         <h2>Dirty 2 Beauty Laundry</h2>
+       </div>
+     </div>
+
+     <div style={{ textAlign: 'center', padding: '10px' }}>
+           
+
+       
+
             <Form onSubmit={formik.handleSubmit} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
-                <h1 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h1>
+                <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
                     <Form.Label column sm={5}>
                         Category
@@ -140,11 +149,22 @@ function UpdateCategory() {
 
                 <Row style={{ marginBottom: '0px' }}>
                     <Col style={{ textAlign: 'center' }}>
-                        <Button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>ADD</Button>
+
+                        <button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Update</button>
+
+                       
                     </Col>
                 </Row>
             </Form>
+            <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
+                  <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
+                </div>
         </div>
+
+      </div>
+      
+      
+        
     );
 }
 

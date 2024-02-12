@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import { Table, Button } from 'react-bootstrap';
 import companyLogo from '../images/logo.png'; 
+import FilterDropdown from '../Components/FilterDropdown';
+import Login from './LogIn';
+
+
+
 
 const ViewBills = () => {
   const [data, setData] = useState([
@@ -25,23 +31,52 @@ const ViewBills = () => {
     setSelectedRows([]);
   };
 
+  //must replace--------------------------
+  const options = ['0716589457', '077894521789', '076985423'];
   return (
 
-    <div className="container-fluid" style={{ maxWidth: '800px', marginTop:'30px'}}> 
+    <div className="container-fluid" style={{ maxWidth: '800px', marginTop:'20px'}}> 
 
   {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
-      <div className="row align-items-center mb-3">
-        <div className="col-sm-auto">
+      <div className="row align-items-center mb-5">
+        <div className="col-md-auto mb-3 mb-md-0">
           <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
         </div>
-        <div className="col-sm">
-          <h2>Dirty 2 Beaty Laundry</h2>
+        <div className="col-md">
+          <h2>Dirty 2 Beauty Laundry</h2>
         </div>
       </div>
 
+
+    {/**---------------------------------Drop down---------------------------------------------------------------------------------- */}
+    <div className="mb-3" style={{ marginBottom: '200px' }}>
+      <div className='row gx-2'>
+        <div className="col-md-6">
+          <div className='row gx-2'>
+            <div className="col-md-6">
+              <p>Select Invoice ID :</p>
+            </div>
+            <div className="col-md-6">
+              <FilterDropdown options={options} />
+            </div>
+          </div> 
+        </div>
+        <div className="col-md-6">
+          <div className='row gx-2'>
+            <div className="col-md-6">
+               <p>Select Phone Number :</p>
+            </div>
+            <div className="col-md-6">
+              <FilterDropdown options={options} />
+             </div>
+          </div> 
+        </div>
+  </div>
+</div>
     {/**-----------------------------View Bills---------------------------------------------------------------------------------------- */}
       
-      <div style={{ marginTop:'30px'}} >
+      <div style={{ marginTop:'50px'}} >
+
         <h5 className=" mb-4">View Bills</h5>
         <div className="table-responsive">
             <Table striped bordered hover style={{ maxWidth: '100%' }}> 
@@ -70,7 +105,9 @@ const ViewBills = () => {
                     <td>{item.customerName}</td>
                     <td>{item.total}</td>
                     <td>
-                      <a href="#">View</a>
+
+                      <a href="./InvoicePage">View</a>
+
                     </td>
                 </tr>
                  ))}
@@ -80,16 +117,22 @@ const ViewBills = () => {
         </div>
       
       {/**------------------------------------------------Button Row--------------------------------------------------------------------------- */}
-      <div className="row">
-        <div className="col-sm d-flex justify-content-end" style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 2 }}>
+
+      <div className="row gx-2">
+        <div className="col-sm justify-content-end d-flex " style={{ bottom: '20px', right: '20px' }}>
+     
             <Button onClick={handleDelete} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
               Delete
             </Button>
         </div>
-        <div className="col-sm d-flex justify-content-start align-items-end" style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
-            <Button style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
+
+        <div className="col-sm  " style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
+            <Link to='../login' style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
               Logout
-            </Button>
+            </Link>
+
+        
+
         </div>
       </div>
 

@@ -5,8 +5,10 @@ const validateToken = require("../middleware/auth");
 const { billAddController, billGetAllController, billGetAllInvoiceNumbersController, billGetAllMobileNumbersController, billGetAllByInvoiceAndMobileController, billGetMainDetailsByIdController, billGetOrderItemDetailsByIdController, billSettleByIdController, billDeleteController } = require("../controllers/billController");
 
 router.post("/add", billAddController);
-router.get("/getOrderItemDetails/:id", [validateToken], billGetOrderItemDetailsByIdController);
-router.get("/getOrderMainDetails/:id", [validateToken], billGetMainDetailsByIdController);
+// router.get("/getOrderItemDetails/:id", [validateToken], billGetOrderItemDetailsByIdController);
+// router.get("/getOrderMainDetails/:id", [validateToken], billGetMainDetailsByIdController);
+router.get("/getOrderItemDetails/:id",billGetOrderItemDetailsByIdController);
+ router.get("/getOrderMainDetails/:id",billGetMainDetailsByIdController);
 router.get("/getAllBills", [validateToken], billGetAllController);
 router.get("/getAllInvoiceNumbers", [validateToken], billGetAllInvoiceNumbersController); 
 router.get("/getAllMobileNumbers", [validateToken], billGetAllMobileNumbersController); 
