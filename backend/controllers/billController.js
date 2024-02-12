@@ -104,6 +104,7 @@ exports.billGetMainDetailsByIdController = async (req, res) => {
             res.json({ error: err });
         } else {
             res.json(result);
+            
         }
     })
 };
