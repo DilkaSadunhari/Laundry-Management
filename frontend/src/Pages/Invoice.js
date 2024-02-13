@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
+
 import {  Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-bootstrap';
 //import CustomerHome from './home';
 import { useFormik } from 'formik';
@@ -9,16 +10,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 const Invoice = () => {
  
 
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
-
   const [customerID, setcutomerID] = useState('');
-
   const [type, setType] = useState('');
-
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
