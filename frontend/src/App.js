@@ -21,13 +21,11 @@ import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
 
+
 //import Invoicedrop from './Pages/invoicedrop';
  
 
-
 import RequireToken from './Auth';
-
-
 
  const boxStyle = {
   width: '50%',
@@ -111,7 +109,7 @@ const App = () => {
       //   element: <Test />
       // },
 
-             
+
   ]);
 
   return (
