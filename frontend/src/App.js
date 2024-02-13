@@ -20,7 +20,7 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
-//import Test from './Pages/test';
+import Test from './Pages/test';
 
 
  const boxStyle = {
@@ -91,10 +91,10 @@ const App = () => {
         path: "/home",
         element: <Home />
       },
-      // {
-      //   path: "/test",
-      //   element: <Test />
-      // },
+       {
+         path: "/test",
+        element: <Test />
+       },
              
   ]);
 
