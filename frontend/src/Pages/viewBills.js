@@ -69,6 +69,7 @@ const ViewBills = () => {
     const selectedMobileObject = mobileNumbers.find(item => item.mobile === selectedMobile);
     if (selectedMobileObject) {
       setSelectedCustomerId(selectedMobileObject.id);
+      filterData(invoiceId, selectedMobileObject.id);
     }
   };
 
@@ -136,7 +137,7 @@ const ViewBills = () => {
       .catch(error => {
         console.log(error);
       });
-  })
+  },[]);
 
   const handleCheckboxChange = (e, id) => {
     if (e.target.checked) {
@@ -154,10 +155,10 @@ const ViewBills = () => {
 
 
 
-  const filterData = () => {
+  const filterData = (invoice_id, customer_id) => {
     axios.post('http://localhost:8000/bill/getAllByInvoiceAndMobile', {
-      invoice_id:invoiceId,
-      customer_id:customerId
+      invoice_id,
+      customer_id
     }, {
       withCredentials: true,
     })
@@ -224,7 +225,10 @@ const ViewBills = () => {
             {filteredInvoiceNumbers.map(item => (
               <Dropdown.Item
                 key={item.id}
-                onClick={() => setSelectedInvoice(item.id)}
+                onClick={() => {
+                  setSelectedInvoice(item.id);
+                  filterData(item.id, selectedCustomerId);
+                }}
               >
                 {item.id}
               </Dropdown.Item>
