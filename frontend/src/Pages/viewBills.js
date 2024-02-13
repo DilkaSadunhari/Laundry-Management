@@ -312,8 +312,8 @@ const ViewBills = () => {
                     <td>
                         <input
                          type="checkbox"
-                         onChange={e => handleCheckboxChange(e, item.id)}
-                         checked={selectedRows.includes(item.id)}
+                        onChange={e => handleCheckboxChange(e, item.invoice_id)}
+                        checked={selectedRows.includes(item.invoice_id)}
                         />
                     </td>
                     <td>{item.invoice_id}</td>
