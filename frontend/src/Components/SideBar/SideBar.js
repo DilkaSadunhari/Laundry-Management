@@ -51,14 +51,14 @@ function Sidebar() {
               {/*<i className='bi bi-caret-down'></i>*/}
             </Link>
             <ul
-              className="nav collapse ms-1 flex-column"
+              className=" ms-1 flex-column"
               id="customerSubMenu"
               data-bs-parent="#parentMenu"
             >
-              <li className="nav-item">
+              <ul className="nav-item">
                 <Link
                   to="/addcustomer"
-                  className="nav-link text-dark px-4 fs-7"
+                  className="nav-link text-dark px-1 fs-7"
                   aria-current="page"
                 >
                   <i className="bi bi-file-plus"></i>Add Customer
@@ -82,7 +82,7 @@ function Sidebar() {
                 </ul>
                </li>*/}
                 </Link>
-              </li>
+              </ul>
             </ul>
           </li>
 
@@ -97,29 +97,29 @@ function Sidebar() {
               {/*<i className='bi bi-caret-down'></i>*/}
             </Link>
             <ul
-              className="nav collapse ms-1 flex-column"
+              className=" ms-1 flex-column"
               id="categorySubMenu"
               data-bs-parent="#parentMenu"
             >
-              <li className="nav-item">
+              <ul className="nav-item">
                 <Link
                   to="/addcategory"
-                  className="nav-link text-dark px-4 fs-7"
+                  className="nav-link text-dark px-1 fs-7"
                   aria-current="page"
                 >
                   <i className="bi bi-file-plus"></i>Add Category
                 </Link>
-              </li>
+              </ul>
 
-              <li className="nav-item">
+              <ul className="nav-item">
                 <Link
                   to="/updatecategary"
-                  className="nav-link text-dark px-4 fs-7"
+                  className="nav-link text-dark px-1 fs-7"
                   aria-current="page"
                 >
                   <i class="bi bi-pencil-square"></i>Update Category
                 </Link>
-              </li>
+              </ul>
             </ul>
           </li>
         </ul>

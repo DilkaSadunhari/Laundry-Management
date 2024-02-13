@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
+//import { Dropdown, FormControl } from 'react-bootstrap';
+//import { ToastContainer, toast } from 'react-toastify';
+//import FilterDropdown from '../Components/FilterDropdown';
+
+
+
 import {  Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-bootstrap';
 //import CustomerHome from './home';
 import { useFormik } from 'formik';
@@ -11,12 +17,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
+
 const Invoice = () => {
  
 
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
-  const [customerID, setcutomerID] = useState('');
   const [type, setType] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -147,7 +153,7 @@ const Invoice = () => {
     setDeliveryTime(e.target.value);
   };
 
-  const handlePrint = () => {
+  const handlePrint =  async() => {
 
     let errorMessage = '';
   
@@ -165,21 +171,19 @@ const Invoice = () => {
     }
     
    // window.location.reload();
-  };
-
-  const OnPrint = async () => {
-    // Prepare data to send to backend
-    const data = {
-      customer_id: parseInt(customerID),
-      received_date: "2024-02-10",
-      received_time: currentTime,
-      delivery_date: deliveryDate,
-      delivery_time: deliveryTime,
-      total: totalAmount.toFixed(2),
-      advance: parseFloat(advancedPayment).toFixed(2),
-      available_balance: parseFloat(balance).toFixed(2),
+    // Prepare data for the request
+    const [month, day, year] = currentDate.split('/');
+    const requestData = {
+      customer_id: 1, // Replace with the actual customer ID
+     received_date: `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`,
+      received_time: currentTime, // Format received time
+      delivery_date:deliveryDate,
+      delivery_time:deliveryTime,
+      total: totalAmount,
+      advance: advancedPayment,
+      available_balance: balance,
       items: items.map(item => ({
-        category_id: 1,
+        category_id: 1, // Replace with the actual category ID
         price_per_unit: item.price,
         qty: item.quantity,
         total: item.totalPrice
@@ -187,36 +191,19 @@ const Invoice = () => {
     };
 
     try {
-      // Send POST request to backend
-
-      axios.post("http://localhost:8000/bill/add", data).then((res) => {
-        console.log(res.data);
-      })
-      
-      // const response = await fetch('http://localhost:8000/bill/add', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // });
-
-      // // Check if request was successful
-      // if (!response.ok) {
-      //   throw new Error('Failed to add bill');
-      // }
-
-      // // Extract data from response
-      // const responseData = await response.json();
-
-      // // Handle success response
-      // console.log('Bill added successfully with ID:', responseData.invoice_id);
+      // Send POST request to the backend API
+      const response = await axios.post('http://localhost:8000/bill/add', requestData);
+      console.log(response.data); // Log response from the server
+      toast.success('Bill Print successfully');
+      setErrorMessage(''); // Clear error message if successful
     } catch (error) {
-      // Handle error
-      console.error('Error adding bill:', error.message);
+      console.error('Error adding bill:', error);
+      setErrorMessage('Error adding bill. Please try again.'); // Display error message if request fails
+      toast.error('Error adding bill. Please try again.');
     }
   };
 
+  
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -241,14 +228,14 @@ const Invoice = () => {
     let errorMessage = '';
   
     // Validation: Category cannot be empty
-    /*if (!category.trim()) {
-      errorMessage += 'Please enter  category Name. ';
+    if (!category.trim()) {
+      errorMessage += 'Please select  category. ';
     }
   
-    // Validation: Price per unit must be a positive floating-point value
+     //Validation: Price per unit must be a positive floating-point value
     if (!/^\d*\.?\d+$/.test(price) || parseFloat(price) <= 0) {
       errorMessage += 'Invalid price per unit. ';
-    }*/
+    }
   
     // Validation: Quantity must be a positive floating-point value
     if (!/^\d*\.?\d+$/.test(quantity) || parseFloat(quantity) <= 0) {
@@ -364,6 +351,10 @@ const Invoice = () => {
 return (
   
     <div className="container mt-4">
+
+
+      
+
       
 {/* ----------------Customer Details-------------- */}
       <div>
@@ -464,36 +455,55 @@ return (
       </Form>
       <ToastContainer />
     </div>
+
       {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
-      <h1 className="text-center" style={{marginTop:"100px"}}>Invoice Generator</h1>
+      {/*<h1 className="text-center" style={{marginTop:"100px"}}>Invoice Generator</h1>*/}
 
 {/* ----------------End of Customer Details-------------- */}
 
 {/* date and time---------------------------------------------------------------------------------------------------------- */}
-
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,marginBottom:'50px'}}>
-
-        <div style={{ marginBottom: '20px' }}>
-        <h6>Current Date: {currentDate}</h6>
-        <h6>Current Time: {currentTime}</h6>
-        </div>
-        <div style={{ marginBottom: '20px' }}>
-          <h6>Delivery Date and Time:</h6>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+<div style={{ display: 'flex', justifyContent: 'space-between',marginTop:'50px' }}>
+      <div style={{ marginBottom: '20px',marginInlineStart:'0px' }}>
+        <h6 style={{marginBottom:'15px'}}>Current Date: {currentDate}</h6>
+        <h6 style={{marginBottom:'5px'}}>Current Time: {currentTime}</h6>
+      </div>
+      <div style={{position:'absolute' ,right:'30px'}}>
+          
+          <div className='row'>
+            <div className='col'>
+            <h6>Delivery Date:</h6>
+            </div>
+            <div className='col'>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
             <input
               type="date"
               value={deliveryDate}
               onChange={handleDateChange}
-              style={{ marginBottom: '10px', width: '100%' }}
+              style={{ marginBottom:'10px', width: '100%' }}
             />
+            </div>
+          </div>
+          </div>
+
+          <div className='row'>
+            <div className='col'>
+             <h6>Delivery Time:</h6>
+            </div>
+            <div className='col'>
             <input
               type="time"
               value={deliveryTime}
               onChange={handleTimeChange}
               style={{ width: '100%' }}
             />
+
+            </div>
           </div>
-        </div>
+          
+           
+      
+      
+    </div>
       </div>
 
       {/* {selectedCustomerDetails && (
@@ -506,16 +516,14 @@ return (
   </div>
 )} */}
 {/*----------------------------------------------------------------------category must be replace----------------------------------------------- */}
-
-<div className="mb-3" style={{ marginBottom: '200px' }}>
-  <div className='row gx-2'>
-    <div className="col-md-6">
-      <p>Select Category :</p>
-    </div>
-    <div className="col-md-6">
-      {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
-      <div>
-      <Dropdown onSelect={handleCategorySelect}>
+<div style={{ display: 'flex' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1 }}>
+          <p>Select Category :</p>
+        </div>
+        {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
+        <div style={{ flex: 1 }}>
+        <Dropdown onSelect={handleCategorySelect}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Select Category
         </Dropdown.Toggle>
@@ -534,42 +542,26 @@ return (
           ))}
         </Dropdown.Menu>
       </Dropdown>
-            </div>
-      {/* --------------------------------------------------------------------------------------------------------- */}
-    </div>
-  </div>
-</div>
 
-<div style={{}}>
-<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
-  <div className='row'>
-    <div className="col-md-6">
-      <div className="row">
-        <div className="col-md-6">
-          <label>Customer ID :</label>
-        </div>
-        <div className="col-md-6">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Category"
-            value={customerID}
-            onChange={(e) => setcutomerID(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
         </div>
       </div>
+      <div style={{ flex: 1 }}>
+      
+      </div>
     </div>
-  </div>
-</div>
-<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
+<div>
+  
+{/**-------------------------------------------------------------Cat,Type,price,quantity---------------------------------------- */}
+<div className="mb-3" >
   <div className='row'>
-    <div className="col-md-6">
-      <div className="row">
-        <div className="col-md-6">
-          <label>Category :</label>
+    <div className='col'>
+    <div className='row'>
+    <div className="col">
+      
+        <div className="col " style={{marginBottom:'10px'}}>
+          <label style={{ fontWeight: 'bold'}}>Category :</label>
         </div>
-        <div className="col-md-6">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -579,19 +571,18 @@ return (
             // onKeyPress={handleKeyPress}
           />
         </div>
-      </div>
+      
     </div>
   </div>
-</div>
-
-<div className="mb-3" style={{ marginBottom: '150px' , marginTop:'80px'}}>
-  <div className='row'>
-    <div className="col-md-6">
-      <div className="row">
-        <div className="col-md-6">
-          <label>Type :</label>
+    </div>
+    <div className='col'>
+    <div className='row'>
+    <div className="col">
+      
+        <div className="col" style={{marginBottom:'10px'}}>
+          <label style={{ fontWeight: 'bold'}}>Type :</label>
         </div>
-        <div className="col-md-6">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -601,19 +592,18 @@ return (
             // onKeyPress={handleKeyPress}
           />
         </div>
-      </div>
+      
     </div>
   </div>
 </div>
-
-<div className="mb-3" style={{ marginBottom: '150px' }}>
-  <div className='row'>
-    <div className="col-md-6">
-      <div className="row">
-        <div className="col-md-6">
-          <label>Price per Unit :</label>
+<div className='col'>
+<div className='row'>
+    <div className="col">
+      
+        <div className="col"style={{marginBottom:'10px'}}>
+          <label style={{ fontWeight: 'bold'}}>Price per Unit :</label>
         </div>
-        <div className="col-md-6">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -623,19 +613,19 @@ return (
             // onKeyPress={handleKeyPress}
           />
         </div>
-      </div>
+      
     </div>
   </div>
 </div>
 
-<div className="mb-3" style={{ marginBottom: '50px' }}>
-  <div className='row'>
-    <div className="col-md-6">
-      <div className="row">
-        <div className="col-md-6">
-          <label>Quantity :</label>
+<div className='col'>
+<div className='row'>
+    <div className="col">
+      
+        <div className="col"style={{marginBottom:'10px'}}>
+          <label style={{ fontWeight: 'bold'}}>Quantity :</label>
         </div>
-        <div className="col-md-6">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -645,9 +635,12 @@ return (
             onKeyPress={handleKeyPress}
           />
         </div>
-      </div>
+      
     </div>
   </div>
+  
+</div>
+</div>
 </div>
 </div>
 
@@ -655,16 +648,17 @@ return (
        
 {/*----------------------------------------Total Price------------------------------------------------------------------- */}
         
-        <div style={{marginTop:'50px',marginBottom:'50px'}}>Total Price: Rs {calculateTotalItemPrice()}</div>
+        <div style={{fontWeight: 'bold'}}>Total Price:Rs  {calculateTotalItemPrice()}</div>
 {/*-------------------------------------ADD BUTTON------------------------------------------------------------------------ */}
         <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '50px', marginBottom:'50px', cursor: 'pointer' }}>Add</button>
 
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
-      <table className="table" style={{marginTop:'50px',marginBottom:'50px'}}>
-
+      <table className="table ">
+        
+      
         <thead>
-          <tr>
+          <tr style={{ backgroundColor: 'rgb(135, 206, 250)', padding: '20px', borderRadius: '10px' }}>
             <th>Category</th>
             <th>Price per unit</th>
             <th>Quantity</th>
@@ -672,6 +666,7 @@ return (
             <th>Action</th>
           </tr>
         </thead>
+        
         <tbody>
           {items.map((item, index) => (
             <tr key={index}>
@@ -689,30 +684,39 @@ return (
 
 {/*---------------------------------------Total Amount--------------------------------------------------------------------------------------------- */}
 
-      <div className="text-end"style={{marginTop:'50px',marginBottom:'50px'}}>
-      <p>Total Amount: Rs {totalAmount}</p>
+      <div className="text-end">
+      <p className="fw-bold fs-5">Total Amount: Rs {totalAmount}</p>
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
-      <div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <label htmlFor="totalPrice">Total Price   :</label>
-
+    <div style={{ backgroundColor: 'rgb(13, 20, 128)', padding: '10px', borderRadius: '10px' }}>
+      <div className='row'style={{paddingInline:'10px'}}>
+        <div className='col'> 
+        <div className='row'>
+          <div className='col '>
+          <div style={{ marginBottom: '20px' }}>
+          <label htmlFor="totalPrice" style={{color: 'white'}}>Total Price   :</label>
+          </div>
+          </div>
+          <div className='col'>
           <input
             type="number"
             id="totalPrice"
             ref={totalPriceRef}
             value={totalAmount}
             readOnly
-            style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
+            style={{ backgroundColor:'rgb(13, 20, 128)',color: 'white' }}
           />
-        </div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <label htmlFor="advancedPayment" style={{paddingRight:'15px'}}>Advanced Payment:</label>
-
-          <input
+          </div>
+          </div>
+        <div className='row'>
+            <div className='col'>
+            <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="advancedPayment"style={{color: 'white'}} >Advanced Payment:</label>
+            </div>
+            </div>
+            <div className='col'>
+            <input
             type="number"
             id="advancedPayment"
             ref={advancedPaymentRef}
@@ -720,22 +724,30 @@ return (
             onChange={handleAdvancedPaymentChange}
             onKeyPress={handleKeyPress}
             placeholder="Enter advanced payment"
-            style={{ padding: '5px', borderRadius: '3px', border: '1px solid #ccc' }}
+            style={{ backgroundColor:'rgb(13, 20, 128)',color: 'white' }}
           />
         </div>
-        <button onClick={calculateBalance} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Calculate Balance</button>
-        <div style={{ marginTop: '30px' }}>
-          {balance && <p>Balance: Rs {balance}</p>}
+          </div>
         </div>
+        <div className='col' style={{marginTop:'40px',display: 'flex', justifyContent: 'flex-end' }}>
+        <button onClick={calculateBalance} style={{ background: 'rgb(135, 206, 235)', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Balance</button>
+        </div> 
+
+        <div >
+          {balance && <p className="fw-bold fs-5" style={{color: 'white'}}>Balance: Rs {balance}</p>}
+        </div>  
+      </div>
       </div>
   
   {/*-------------print Bill------------------------------------------------------------------------------------------------------------------ */}
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-      <button onClick={(handlePrint ||calculateBalance)&&OnPrint} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
+      <button onClick={(handlePrint||calculateBalance)} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>
         Print
       </button>
+      <ToastContainer/>
       </div>
+      
 
   );
 };
