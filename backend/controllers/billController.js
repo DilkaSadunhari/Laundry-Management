@@ -22,7 +22,7 @@ exports.billAddController = async (req, res) => {
     let resultDetails = [];
 
     //const { customer_id, received_date, received_time, delivery_date, delivery_time, total, advance, available_balance, items } = req.body;
-    console.log('reqest',req.body);
+    //console.log('reqest',req.body);
     
 
     // Start a transaction
@@ -291,11 +291,8 @@ exports.billAddController = async (req, res) => {
 
 
                 } catch (error) {
-                    //console.log(error);
-                    res.json({
-                        message: "Bill added successfully",
-                        invoice_id: orderMainId,
-                    });
+                   console.log(error);
+                   
                 }
 
 
