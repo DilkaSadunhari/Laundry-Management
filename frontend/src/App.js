@@ -20,7 +20,10 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
-//import Test from './Pages/test';
+import Invoicedrop from './Pages/invoicedrop';
+ import Test from './Pages/test';
+
+import RequireToken from './Auth';
 
 
  const boxStyle = {
@@ -77,7 +80,7 @@ const App = () => {
       },
       {
         path: "/viewBills",
-        element: <ViewBills />
+        element: <RequireToken><ViewBills /></RequireToken>
       },
       {
         path: "/login",
@@ -85,16 +88,20 @@ const App = () => {
       },
       {
         path: "/invoicepage",
-        element: <InvoicePage />
+        element: <RequireToken><InvoicePage /></RequireToken>
       },
       {
         path: "/home",
         element: <Home />
       },
-      // {
-      //   path: "/test",
-      //   element: <Test />
-      // },
+      {
+        path: "/invoicedrop",
+        element: <Invoicedrop />
+      },
+      {
+        path: "/test",
+        element: <Test />
+      },
              
   ]);
 

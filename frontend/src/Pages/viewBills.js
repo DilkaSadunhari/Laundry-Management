@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
+ 
 import { Table, Button } from 'react-bootstrap';
 import companyLogo from '../images/logo.png'; 
 import FilterDropdown from '../Components/FilterDropdown';
-import Login from './LogIn';
+
 
 
 
@@ -31,6 +31,14 @@ const ViewBills = () => {
     setSelectedRows([]);
   };
 
+//-------------------------------------------Logout handle---------------------------------------
+  const handleLogout = () => {
+    console.log('Attempting to remove cookie...');
+    document.cookie = 'access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; ';
+    console.log('Cookie removed');
+    window.location.href = '/login';
+  };
+//-------------------------------------------------------------------------------------------------------
   //must replace--------------------------
   const options = ['0716589457', '077894521789', '076985423'];
   return (
@@ -127,9 +135,9 @@ const ViewBills = () => {
         </div>
 
         <div className="col-sm  " style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
-            <Link to='../login' style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
+            <Button onClick={handleLogout} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
               Logout
-            </Link>
+            </Button>
 
         
 
