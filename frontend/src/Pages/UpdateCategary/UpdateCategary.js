@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FilterDropdown from '../../Components/FilterDropdown';
 import { Row, Col, Form,Alert } from 'react-bootstrap';
 import { useFormik } from 'formik'
-
+import { Dropdown, FormControl } from 'react-bootstrap';
+import { useState,useEffect } from 'react';
 import logo from '../../images/logo.png'
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -37,14 +40,126 @@ function UpdateCategory() {
       type: 'Choose...',
     },
     validate,
-    onSubmit: (values) => {
-      // Handle form submission logic here
-      console.log(values);
-    },
+
+  
   });
+
+   //----------------------------------dropdown menu----------------------------
+   const [categories, setCategories] = useState([]);
+   const [selectedCategory, setSelectedCategory] = useState({});
+   const [filterText, setFilterText] = useState('');
+   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    useEffect(() => {
+     // Fetch categories from your backend when the component mounts
+     fetchCategories();
+   }, []);
+ 
+   const fetchCategories = async () => {
+     try {
+       const response = await fetch('http://localhost:8000/category/getAllNames'); // Update with your backend API endpoint
+       const data = await response.json();
+       console.log('Fetched categories:', data);
+       setCategories(data);
+     } catch (error) {
+       console.error('Error fetching categories:', error);
+     }
+   };
+
+
+ //-----------------------------------------------------------------
+   const handleCategorySelect = async (categoryId) => {
+     try {
+       const response = await fetch(`http://localhost:8000/category/get/${categoryId}`);
+       
+       if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+       }
+   
+       const data = await response.json();
+       console.log('Category Data:', data);
+       setSelectedCategoryId(categoryId);
+       setSelectedCategory(data);
+       //setPrice(data.price);
+       //setCategory(data.name);
+       // Update Formik form values with the selected category data
+    formik.setValues({
+      name: data.name,
+      price: data.price,
+      type: getTypeValue(data.type),
+    });
+    console.log('Selected Category ID:', categoryId);
+    console.log('Selected Category:', selectedCategory);
+    console.log('Formik Values:', formik.values);
+
+     } catch (error) {
+       console.error('Error fetching category data:', error);
+     }
+   };
+   
+ 
+   const handleFilterChange = (e) => {
+     setFilterText(e.target.value);
+   };
+ 
+   const filteredCategories = categories.filter((category) =>
+     category.name.toLowerCase().includes(filterText.toLowerCase())
+   );
+ //-------------------------------------------------------------------------------------------------------------
+ const getTypeValue = (selectedType) => {
+  let selectedValue;
+  if (selectedType === 0) {
+    selectedValue = 'kilo';
+  } else if (selectedType === 1) {
+    selectedValue = 'pieces';
+  } else {
+    selectedValue = selectedType;
+  }
+  return selectedValue;
+};
+
+
+
+//-------------------------------------------------------------
+
+const handleSubmit = async () => {
+  try {
+    // Ensure a category is selected
+    if (!selectedCategory ) {
+      console.error('No category selected');
+      return;
+    }
+
+    const updatedData = {
+      
+      name: formik.values.name,
+      type: formik.values.type=== "kilo" ? 0 : formik.values.type === "piece" ? 1 : formik.values.type,
+      price_per_unit: parseFloat(formik.values.price) || 0,
+      id: selectedCategoryId,
+    };
+
+    const response = await axios.put(`http://localhost:8000/category/update/${selectedCategoryId}`, updatedData);
+    console.log ('updated data: ', updatedData);
+    console.log(response.data);
+    console.log('Selected Category ID:', selectedCategoryId);
+    console.log('Formik Values:', formik.values);
+
+    // Handle any additional logic after successful update
+    if (response.status === 200) {
+      toast.success('Category updated successfully');
+      formik.resetForm();
+      
+    } else {
+      toast.error('Failed');
+    }
+
+  } catch (error) {
+    console.error('Error updating category:', error);
+    toast.error('Error updating category');
+  }
+};
+
   //-------------------------------------------------------------------------------------------------------------
-    const options = ['srilanka', 'srimalee', 'canada', 'Option 4', 'Option 5'];
-    return (
+       return (
 
       <div style={{marginTop:'20px'}}>
          {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
@@ -62,16 +177,47 @@ function UpdateCategory() {
 
        
 
-            <Form onSubmit={formik.handleSubmit} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
+            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
                 <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
                     <Form.Label column sm={5}>
                         Category
                     </Form.Label>
                     <Col sm={7}>
-                        <FilterDropdown options={options} />
+                       {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
+                        <div>
+                        <Dropdown onSelect={handleCategorySelect}>
+                          <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            Select Category
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            <FormControl
+                              type="text"
+                              placeholder="Search category"
+                              className="mb-2"
+                              onChange={handleFilterChange}
+                            />
+                            {filteredCategories.map((category) => (
+                              <Dropdown.Item key={category.id} eventKey={category.id}>
+                                {category.name}
+                              </Dropdown.Item>
+                            ))}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                              </div>
+                        {/* --------------------------------------------------------------------------------------------------------- */}
                     </Col>
                 </Form.Group>
+                {/* {selectedCategory && (
+        <div>
+          <h2>Selected Category:</h2>
+          <p>ID: {selectedCategory.id}</p>
+          <p>Name: {selectedCategory.name}</p>
+          <p>Price: {selectedCategory.price}</p>
+          <p>type: {selectedCategory.type}</p>
+        </div>
+      )} */}
 
                 <Row style={{ marginBottom: '20px' }}>
         <Form.Group as={Col} controlId="ucatName">
@@ -150,12 +296,17 @@ function UpdateCategory() {
                 <Row style={{ marginBottom: '0px' }}>
                     <Col style={{ textAlign: 'center' }}>
 
-                        <button type="submit" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Update</button>
+                        <button 
+                        type="submit" 
+                        style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>
+                          Update
+                        </button>
 
                        
                     </Col>
-                </Row>
+                </Row> 
             </Form>
+            <ToastContainer />
             <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
                   <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
                 </div>

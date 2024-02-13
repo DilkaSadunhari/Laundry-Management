@@ -14,11 +14,12 @@ exports.categoryAddController = async (req, res) => {
 exports.categoryUpdateController = async (req, res) => {
     const id = req.params.id;
     const { name, type, price_per_unit } = req.body;
+    console.log ('Request body:', req.body)
     db.query("update category set  name=?, type=? ,price_per_unit=? where id=? ", [name, type, price_per_unit,id], (err, result) => {
         if (err) {
-            res.json({ error: err });
+            res.status(500).json({ error: err });
         } else {
-            res.json("Category Updated");
+            res.status(200).json("Category Updated");
         }
     })
 }

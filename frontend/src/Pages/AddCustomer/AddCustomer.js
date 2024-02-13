@@ -75,6 +75,7 @@ function AddCustomer() {
       });
       if (response.status === 200) {
         toast.success('Customer added successfully');
+        getNumbers();
         formik.resetForm();
         setPhoneNumber('');
          
