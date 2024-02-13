@@ -21,10 +21,9 @@ import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
 
-
-
 import Invoicedrop from './Pages/invoicedrop';
  
+
 
 import RequireToken from './Auth';
 
@@ -91,7 +90,9 @@ const App = () => {
         element: <Login />
       },
       {
+
         path: "/invoicepage/:invoice_id",
+
         element: <RequireToken><InvoicePage /></RequireToken>
       },
       {
@@ -99,12 +100,12 @@ const App = () => {
         element: <Home />
       },
 
-      
 
       {
         path: "/invoicedrop",
         element: <Invoicedrop />
       },
+
       // {
       //   path: "/test",
       //   element: <Test />
