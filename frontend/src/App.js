@@ -105,10 +105,10 @@ const App = () => {
         path: "/invoicedrop",
         element: <Invoicedrop />
       },
-      {
-        path: "/test",
-        element: <Test />
-      },
+      // {
+      //   path: "/test",
+      //   element: <Test />
+      // },
 
              
   ]);
