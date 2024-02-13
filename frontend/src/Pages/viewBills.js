@@ -142,6 +142,7 @@ const ViewBills = () => {
   const handleCheckboxChange = (e, id) => {
     if (e.target.checked) {
       setSelectedRows([...selectedRows, id]);
+      console.log(selectedRows);
     } else {
       setSelectedRows(selectedRows.filter(rowId => rowId !== id));
     }
