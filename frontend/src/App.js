@@ -20,14 +20,7 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
-
-import Invoicedrop from './Pages/invoicedrop';
- 
-
-
 import RequireToken from './Auth';
-
-
 
  const boxStyle = {
   width: '50%',
@@ -101,17 +94,6 @@ const App = () => {
       },
 
 
-      {
-        path: "/invoicedrop",
-        element: <Invoicedrop />
-      },
-
-      // {
-      //   path: "/test",
-      //   element: <Test />
-      // },
-
-             
   ]);
 
   return (
