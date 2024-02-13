@@ -98,13 +98,13 @@ const ViewBills = () => {
 //     // Add more data as needed
 //   ]);
 
-const ViewBills = () => {
+// const ViewBills = () => {
   const [data, setData] = useState([]);
 
   const [selectedRows, setSelectedRows] = useState([]);
   const [invoiceId, setInvoiceId] = useState('');
   const [customerId, setCustomerId] = useState('');
-  const [mobileNumbers, setMobileNumbers] = useState([]);
+  //const [mobileNumbers, setMobileNumbers] = useState([]);
   const[invoiceIds,setInvoiceIds] = useState([]);
   
 
@@ -346,8 +346,6 @@ const ViewBills = () => {
               Logout
             </Button>
 
-        
-
         </div>
       </div>
 
@@ -356,5 +354,6 @@ const ViewBills = () => {
     
   );
 };
+
 
 export default ViewBills;

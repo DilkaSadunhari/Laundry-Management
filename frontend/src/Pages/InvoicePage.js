@@ -12,7 +12,7 @@ const InvoicePage = () => {
 
   useEffect(() => {
     console.log('useEffect is running');
-//-----------------------------------------fetching customer details------------------------------------------------------------------------------
+    //-----------------------------------------fetching customer details------------------------------------------------------------------------------
     const fetchMainDetails = async () => {
       try {
         const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/'+invoice_id);
