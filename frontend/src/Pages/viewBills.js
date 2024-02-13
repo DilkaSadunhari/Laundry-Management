@@ -1,21 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
  
 import { Table, Button } from 'react-bootstrap';
 import companyLogo from '../images/logo.png'; 
 import FilterDropdown from '../Components/FilterDropdown';
+import axios from "axios";
 
 
 
 
 
 const ViewBills = () => {
-  const [data, setData] = useState([
-    { id: 1, invoiceId: 1, customerId: 101, customerName: 'John Doe', total: 100 },
-    { id: 2, invoiceId: 2, customerId: 102, customerName: 'Jane Smith', total: 200 },
-    { id: 3, invoiceId: 3, customerId: 107, customerName: 'Hana', total: 800 },
-    // Add more data as needed
-  ]);
+  const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [invoiceId, setInvoiceId] = useState('');
+  const [customerId, setCustomerId] = useState('');
+  const [mobileNumbers, setMobileNumbers] = useState([]);
+  const[invoiceIds,setInvoiceIds] = useState([]);
+  
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/bill/getAllBills', {
+      withCredentials: true,
+    })
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios.get('http://localhost:8000/bill/getAllMobileNumbers', {
+      withCredentials: true,
+    })
+      .then(response => {
+        setMobileNumbers(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios.get('http://localhost:8000/bill/getAllInvoiceNumbers', {
+      withCredentials: true,
+    })
+      .then(response => {
+        setInvoiceIds(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  })
 
   const handleCheckboxChange = (e, id) => {
     if (e.target.checked) {
@@ -31,6 +62,21 @@ const ViewBills = () => {
     setSelectedRows([]);
   };
 
+  const filterData = () => {
+    axios.post('http://localhost:8000/bill/getAllByInvoiceAndMobile', {
+      invoice_id:invoiceId,
+      customer_id:customerId
+    }, {
+      withCredentials: true,
+    })
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
 //-------------------------------------------Logout handle---------------------------------------
   const handleLogout = () => {
     console.log('Attempting to remove cookie...');
@@ -40,7 +86,7 @@ const ViewBills = () => {
   };
 //-------------------------------------------------------------------------------------------------------
   //must replace--------------------------
-  const options = ['0716589457', '077894521789', '076985423'];
+  
   return (
 
     <div className="container-fluid" style={{ maxWidth: '800px', marginTop:'20px'}}> 
@@ -65,7 +111,7 @@ const ViewBills = () => {
               <p>Select Invoice ID :</p>
             </div>
             <div className="col-md-6">
-              <FilterDropdown options={options} />
+              <FilterDropdown options={invoiceIds} />
             </div>
           </div> 
         </div>
@@ -75,7 +121,7 @@ const ViewBills = () => {
                <p>Select Phone Number :</p>
             </div>
             <div className="col-md-6">
-              <FilterDropdown options={options} />
+              <FilterDropdown options={mobileNumbers} />
              </div>
           </div> 
         </div>
@@ -91,16 +137,19 @@ const ViewBills = () => {
             <thead>
                 <tr>
                     <th></th>
-                    <th>Invoice ID</th>
-                    <th>Customer ID</th>
+                <th>Invoice ID</th>
+                <th>Delivery Date</th>
+                <th>Delivery Time</th>
                     <th>Customer Name</th>
-                    <th>Total</th>
+                <th>Total</th>
+                <th>Advance</th>
+                <th>Balance</th>
                     <th>View Bills</th>
                 </tr>
             </thead>
             <tbody>
                 {data.map((item, index) => (
-                <tr key={item.id}>
+                  <tr key={item.invoice_id}>
                     <td>
                         <input
                          type="checkbox"
@@ -108,13 +157,16 @@ const ViewBills = () => {
                          checked={selectedRows.includes(item.id)}
                         />
                     </td>
-                    <td>{item.invoiceId}</td>
-                    <td>{item.customerId}</td>
-                    <td>{item.customerName}</td>
+                    <td>{item.invoice_id}</td>
+                    <td>{item.delivery_date}</td>
+                    <td>{item.delivery_time}</td>
+                    <td>{item.Customer_name}</td>
                     <td>{item.total}</td>
+                    <td>{item.advance}</td>
+                    <td>{item.available_balance}</td>
                     <td>
 
-                      <a href="./InvoicePage">View</a>
+                      <a href={`./InvoicePage/${item.invoice_id}`}>View</a>
 
                     </td>
                 </tr>

@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 //------------------------------------------------------------------connect to back end --------------------------------------------------------//
-const InvoicePage = ({ invoice_id }) => {
+const InvoicePage = () => {
   const [mainDetails, setMainDetails] = useState(null);
   const [itemDetails, setItemDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const { invoice_id } = useParams();
 
   useEffect(() => {
     console.log('useEffect is running');
 //-----------------------------------------fetching customer details------------------------------------------------------------------------------
     const fetchMainDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/14');
-        setMainDetails(response.data);
+        const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/'+invoice_id);
+        setMainDetails(response.data[0]);
 
         console.log(response.data);
       } catch (error) {
@@ -23,7 +26,7 @@ const InvoicePage = ({ invoice_id }) => {
 //--------------------------------------------fetching table data-------------------------------------------------------------------------------
     const fetchItemDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/bill/getOrderItemDetails/14');
+        const response = await axios.get('http://localhost:8000/bill/getOrderItemDetails/'+invoice_id);
         setItemDetails(response.data);
        
       } catch (error) {

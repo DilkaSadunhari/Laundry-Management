@@ -91,7 +91,7 @@ const App = () => {
         element: <Login />
       },
       {
-        path: "/invoicepage",
+        path: "/invoicepage/:invoice_id",
         element: <RequireToken><InvoicePage /></RequireToken>
       },
       {
