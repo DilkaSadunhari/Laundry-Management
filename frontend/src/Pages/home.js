@@ -1,150 +1,122 @@
-import React , { useState,useEffect } from 'react';
-import { Row, Col, Form, Button, Alert, Dropdown, FormControl } from 'react-bootstrap';
-//import FilterDropdown from '../Components/FilterDropdown';
-//import './AddCustomer/AddCustomer.css'; 
-import { useFormik } from 'formik'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-bootstrap';
+import { useFormik } from 'formik';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Home() {
+const CustomerHome = ({
+  selectedCustomerInvoice,
+  setSelectedCustomerInvoice,
+  customerDetailsInvoice,
+  setCustomerDetailsInvoice,
+}) => {
+  const [customerDataHome, setCustomerDataHome] = useState([]);
+  const [selectedCustomerHome, setSelectedCustomerHome] = useState(null);
+  const [customerDetailsHome, setCustomerDetailsHome] = useState(null);
+  const [filterTextHome, setFilterTextHome] = useState('');
+  const [filteredOptionsHome, setFilteredOptionsHome] = useState([]);
+  const [updateSuccessHome, setUpdateSuccessHome] = useState(false);
 
-//----------------------------------------------------------------------------------------------------
-
-const [phoneNumber, setPhoneNumber] = useState('');
-const [phoneNumberError, setPhoneNumberError] = useState('');
-
-const handlePhoneNumberChange = (e) => {
-  const value = e.target.value;
-  setPhoneNumber(value);
-
-  // Regular expression for a valid phone number (adjust as needed)
-  const phoneRegex = /^[0-9]{10}$/;
-
-  if (!value) {
-    setPhoneNumberError('Phone number is required.');
-  } else if (!phoneRegex.test(value)) {
-    setPhoneNumberError('Please enter a valid 10-digit phone number.');
-  } else {
-    setPhoneNumberError('');
-  }
-};
-const validate = (values) => {
-  const errors = {};
-
-  // Add your validation logic here
-  if (!values.name) {
-    errors.name = 'Name is required';
-  }
-
-  
-
-  if (!values.address) {
-    errors.address = 'Address is required';
-  }
-
-  return errors;
-};
-
-const formik = useFormik({
-  initialValues: {
-    name: '',
-    
-    address: '',
-  },
-  validate,
-  onSubmit: (values) => {
-    // Handle form submission logic here
-    console.log(values);
-    window.location.reload();
-  },
-});
-
-//----------------------------------dropdown menu----------------------------
-const [mobileNumbers, setMobileNumbers] = useState([]);
-  const [selectedMobile, setSelectedMobile] = useState('');
-  const [customerData, setCustomerData] = useState(null);
-  const [error, setError] = useState(null);
-
-  const [filterText, setFilterText] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(mobileNumbers); // Initialize with mobileNumbers
-
-  // Fetch mobile numbers from your backend
   useEffect(() => {
-    // Make sure to replace 'YOUR_BACKEND_ENDPOINT' with the actual endpoint
-    fetch('http://localhost:8000/customer/getAllMobileNumbers')
+    axios.get('http://localhost:8000/customer/getAllMobileNumbers') // Replace with your actual API endpoint
       .then(response => {
-        if (!response.ok) {
-          throw new Error(`Server returned ${response.status} ${response.statusText}`);
-        }
-        return response.json();
+        console.log(response);
+        return response.data;
       })
-      .then(data => {
-        setMobileNumbers(data);
-        setFilteredOptions(data); // Update filteredOptions with mobileNumbers
-      })
-      .catch(error => {
-        console.error('Error fetching mobile numbers:', error);
-        setError(error.message);
-      });
+      .then(data => setCustomerDataHome(data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  // Handle mobile number selection
-  const handleMobileSelection = async (selectedMobile) => {
-    setSelectedMobile(selectedMobile);
+  const formikHome = useFormik({
+    initialValues: {
+      name: '',
+      phoneNumber: '',
+      address: '',
+    },
+    onSubmit: values => {
+      // Handle form submission logic here
+      console.log('Form submitted with values:', values);
+      // You can trigger the update function here
+      handleUpdateHome(values);
+    },
+  });
 
-    // Find the corresponding id for the selected mobile number
-    const selectedMobileObject = mobileNumbers.find(item => item.mobile === selectedMobile);
-    if (selectedMobileObject) {
-      try {
-        // Fetch customer data based on the selected mobile number's id
-        const response = await fetch(`http://localhost:8000/customer/get/${selectedMobileObject.id}`);
-        if (!response.ok) {
-          throw new Error(`Server returned ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        setCustomerData(data);
-      } catch (error) {
-        console.error('Error fetching customer data:', error);
-        setError(error.message);
+  const handleSelectHome = (eventKey, event) => {
+    const selected = customerDataHome.find(customer => customer.mobile === eventKey);
+    setSelectedCustomerHome(selected);
+
+    if (selected) {
+      axios.get(`http://localhost:8000/customer/get/${selected.id}`)  // Replace with your actual customer details endpoint
+        .then(response => {
+          setCustomerDetailsHome(response.data);
+          // Set the initial form values when a customer is selected
+          formikHome.setValues({
+            name: response.data.name,
+            phoneNumber: response.data.mobile,
+            address: response.data.address,
+          });
+          console.log('Selected Customer Data:', response.data);
+        })
+        .catch(error => console.error('Error fetching customer details:', error));
+    }
+  };
+
+  const handleFilterChangeHome = (e) => {
+    setFilterTextHome(e.target.value);
+    const options = customerDataHome.filter(customer => customer.mobile.includes(e.target.value));
+    setFilteredOptionsHome(options);
+  };
+
+  const handleOptionSelectHome = (number) => {
+    setSelectedCustomerHome(number);
+    setFilterTextHome('');
+
+    if (number) {
+      axios.get(`http://localhost:8000/customer/get/${number.id}`)  // Replace with your actual customer details endpoint
+        .then(response => setCustomerDetailsHome(response.data))
+        .catch(error => console.error('Error fetching customer details:', error));
+    }
+  };
+
+  const handleUpdateHome = (values) => {
+    if (selectedCustomerHome) {
+      const { name, address, phoneNumber } = values;
+      // Make sure phoneNumber is not null before updating
+
+      if (phoneNumber) {
+        axios.put(`http://localhost:8000/customer/update/${selectedCustomerHome.id}`, { name, address, mobile: phoneNumber })
+          .then(response => {
+            console.log(response.data);
+            setUpdateSuccessHome(true);
+            // Optionally, update the displayed details after a successful update
+            setCustomerDetailsHome({ ...selectedCustomerHome, ...values });
+            toast.success('Customer updated successfully!');
+          })
+          .catch(error => {
+            console.error('Error updating customer:', error);
+            toast.error('Failed to update customer. Please try again.');
+          });
+      } else {
+        console.error('Phone number cannot be null');
+        toast.error('Phone number cannot be null');
       }
     }
   };
 
-  const handleFilterChange = (e) => {
-    const searchText = e.target.value;
-    setFilterText(searchText);
-
-    const filtered = mobileNumbers.filter((option) =>
-      option.mobile.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    setFilteredOptions(filtered);
-  };
-
-  const handleOptionSelect = (option) => {
-    handleMobileSelection(option.mobile);
-  };
-
-  const dropdownStyle = {
-    backgroundColor: 'ash', // You can replace 'ash' with your desired color
-  };
-//-------------------------------------------------------------------------------------------------------------
-//const options = ['0716589457', '077894521789', '076985423'];
   return (
-    <div className="container">
-    
-    <Form className="custom-form" onSubmit={formik.handleSubmit}>
-
-    <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
-        <Form.Label column sm={5}>
-            Phone Number :
-        </Form.Label>
-        <Col sm={7}>
-            {/* <MobileFilterDropdown options={options} /> */}
+    <div>
+      <Form className="custom-form" onSubmit={formikHome.handleSubmit}>
+        <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
+          <Form.Label column sm={5}>
+            Phone Number:
+          </Form.Label>
+          <Col sm={7}>
             <div>
-              {error && <p>Error: {error}</p>}
-
-              <Dropdown style={dropdownStyle}>
+              <Dropdown onSelect={handleSelectHome}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  {selectedMobile ? selectedMobile : 'Select Mobile Number'}
+                  {selectedCustomerHome ? selectedCustomerHome.mobile : 'Select Mobile Number'}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
@@ -152,90 +124,87 @@ const [mobileNumbers, setMobileNumbers] = useState([]);
                     autoFocus
                     className="mx-3 my-2 w-auto"
                     placeholder="Type to filter"
-                    onChange={handleFilterChange}
-                    value={filterText}
+                    onChange={handleFilterChangeHome}
+                    value={filterTextHome}
                   />
-                  {filteredOptions.map((number, index) => (
-                    <Dropdown.Item
-                      key={index}
-                      onClick={() => handleOptionSelect(number)}
-                    >
-                      {number.mobile}
+                  {filteredOptionsHome.map((customer, index) => (
+                    <Dropdown.Item key={index} eventKey={customer.mobile} onClick={() => handleOptionSelectHome(customer)}>
+                      {customer.mobile}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-        </Col>
-    </Form.Group>
+          </Col>
+        </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
-        <Form.Label column sm={3}>
-          Name :
-        </Form.Label>
-        <Col sm={9}>
-        <Form.Control
-                type="text"
-                name="name"
-                value={customerData ? customerData.name : formik.values.name}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
-              />
-              {formik.touched.name && formik.errors.name && (
-                <Alert variant="danger">{formik.errors.name}</Alert>
-              )}
-        </Col>
-      </Form.Group>
+        {/* Rest of the form fields */}
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
+          <Form.Label column sm={3}>
+            Name:
+          </Form.Label>
+          <Col sm={9}>
+            <Form.Control
+              type="text"
+              name="name"
+              value={formikHome.values.name}
+              onChange={formikHome.handleChange}
+              onBlur={formikHome.handleBlur}
+              style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
+            />
+            {formikHome.touched.name && formikHome.errors.name && (
+              <Alert variant="danger">{formikHome.errors.name}</Alert>
+            )}
+          </Col>
+        </Form.Group>
 
-      
-      <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
-      <Form.Label column sm={3}>
-        Phone number :
-      </Form.Label>
-      <Col sm={9}>
-        <Form.Control
-          type="text"
-          value={customerData ? customerData.mobile : phoneNumber}
-          onChange={handlePhoneNumberChange}
-          style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
-        />
-        {phoneNumberError && (
-          <Alert variant="danger">{phoneNumberError}</Alert>
-        )}
-      </Col>
-    </Form.Group>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalPhoneNumber">
+          <Form.Label column sm={3}>
+            Phone number:
+          </Form.Label>
+          <Col sm={9}>
+            <Form.Control
+              type="text"
+              name="phoneNumber"
+              value={formikHome.values.phoneNumber}
+              onChange={formikHome.handleChange}
+              onBlur={formikHome.handleBlur}
+              style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
+            />
+            {formikHome.touched.phoneNumber && formikHome.errors.phoneNumber && (
+              <Alert variant="danger">{formikHome.errors.phoneNumber}</Alert>
+            )}
+          </Col>
+        </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" controlId="formHorizontalAddress">
-        <Form.Label column sm={3}>
-         Address :
-        </Form.Label>
-        <Col sm={9}>
-        <Form.Control
-                type="text"
-                name="address"
-                value={customerData ? customerData.address : formik.values.address}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
-              />
-              {formik.touched.address && formik.errors.address && (
-                <Alert variant="danger">{formik.errors.address}</Alert>
-              )}
-        </Col>
-      </Form.Group>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalAddress">
+          <Form.Label column sm={3}>
+            Address:
+          </Form.Label>
+          <Col sm={9}>
+            <Form.Control
+              type="text"
+              name="address"
+              value={formikHome.values.address}
+              onChange={formikHome.handleChange}
+              onBlur={formikHome.handleBlur}
+              style={{ borderRadius: '15px', backgroundColor: '#d3d3d3' }}
+            />
+            {formikHome.touched.address && formikHome.errors.address && (
+              <Alert variant="danger">{formikHome.errors.address}</Alert>
+            )}
+          </Col>
+        </Form.Group>
 
-      <Form.Group as={Row} className="mb-3">
-        <Col sm={{ span: 8, offset: 4 }}>
-          <Button type="submit" className="custom-button"style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }} >ADD</Button>
-        </Col>
-      </Form.Group>
-    </Form>
-
-   
-   
+        <Form.Group as={Row} className="mb-3">
+          <Col sm={{ span: 8, offset: 4 }}>
+            <Button type="submit" className="custom-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>UPDATE</Button>
+          </Col>
+        </Form.Group>
+      </Form>
+      <ToastContainer />
     </div>
   );
-}
+};
 
-export default Home;
+export default CustomerHome;

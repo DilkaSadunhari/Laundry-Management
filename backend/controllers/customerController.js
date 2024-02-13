@@ -14,7 +14,9 @@ exports.customerAddController = async (req, res) => {
 
 exports.customerUpdateController = async (req, res) => {
     const id = req.params.id;
+    console.log("ID: ", id);
     const { name, address, mobile } = req.body;
+    console.log("updated:", req.body);
     db.query("update customer set name=? , address=?,mobile=? where id=?", [name, address, mobile,id], (err, result) => {
         if (err) {
             res.json({ error: err });
