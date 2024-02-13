@@ -20,10 +20,14 @@ import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
+
+
+
 import Invoicedrop from './Pages/invoicedrop';
- import Test from './Pages/test';
+ 
 
 import RequireToken from './Auth';
+
 
 
  const boxStyle = {
@@ -94,6 +98,9 @@ const App = () => {
         path: "/home",
         element: <Home />
       },
+
+      
+
       {
         path: "/invoicedrop",
         element: <Invoicedrop />
@@ -102,6 +109,7 @@ const App = () => {
         path: "/test",
         element: <Test />
       },
+
              
   ]);
 

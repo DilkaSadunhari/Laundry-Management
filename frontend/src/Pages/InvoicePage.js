@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+//------------------------------------------------------------------connect to back end --------------------------------------------------------//
 const InvoicePage = ({ invoice_id }) => {
   const [mainDetails, setMainDetails] = useState(null);
   const [itemDetails, setItemDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('useEffect is running');
+//-----------------------------------------fetching customer details------------------------------------------------------------------------------
     const fetchMainDetails = async () => {
       try {
         const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/14');
         setMainDetails(response.data);
+
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching main details:', error);
       }
     };
-
+//--------------------------------------------fetching table data-------------------------------------------------------------------------------
     const fetchItemDetails = async () => {
       try {
         const response = await axios.get('http://localhost:8000/bill/getOrderItemDetails/14');
         setItemDetails(response.data);
+       
       } catch (error) {
         console.error('Error fetching item details:', error);
+       
       }
     };
 
@@ -32,7 +38,7 @@ const InvoicePage = ({ invoice_id }) => {
       setLoading(false);
     };
 
-    fetchData();
+     fetchData();
   }, [invoice_id]);
 
   if (loading) {
@@ -43,7 +49,10 @@ const InvoicePage = ({ invoice_id }) => {
     return <div>Error fetching invoice details</div>;
   }
 
+
+  //----------------------------------------------------------------------------------------------------------------------------------------
   return (
+    console.log('useEffect cleanup'),
     <div className="container">
       <h1 className="text-center pt-4">Invoice: {mainDetails.invoice_id}</h1>
       <div className="row" style={{ marginTop: '20px' }}>
