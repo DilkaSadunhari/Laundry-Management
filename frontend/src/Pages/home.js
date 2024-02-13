@@ -6,12 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const CustomerHome = ({
-  selectedCustomerInvoice,
-  setSelectedCustomerInvoice,
-  customerDetailsInvoice,
-  setCustomerDetailsInvoice,
-}) => {
+const CustomerHome = () => {
   const [customerDataHome, setCustomerDataHome] = useState([]);
   const [selectedCustomerHome, setSelectedCustomerHome] = useState(null);
   const [customerDetailsHome, setCustomerDetailsHome] = useState(null);

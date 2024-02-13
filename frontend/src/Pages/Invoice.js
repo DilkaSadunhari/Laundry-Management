@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 import {  Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-bootstrap';
-//import CustomerHome from './home';
+
 import { useFormik } from 'formik';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -120,15 +120,15 @@ const Invoice = () => {
             setUpdateSuccessHome(true);
             // Optionally, update the displayed details after a successful update
             setCustomerDetailsHome({ ...selectedCustomerHome, ...values });
-            toast.success('Customer updated successfully!');
+           // toast.success('Customer updated successfully!');
           })
           .catch(error => {
             console.error('Error updating customer:', error);
-            toast.error('Failed to update customer. Please try again.');
+            //toast.error('Failed to update customer. Please try again.');
           });
       } else {
         console.error('Phone number cannot be null');
-        toast.error('Phone number cannot be null');
+        //toast.error('Phone number cannot be null');
       }
     }
   };

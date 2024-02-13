@@ -6,6 +6,7 @@ import "../../Pages/AddCustomer/AddCustomer";
 import "../../Pages/UpdateCategary/UpdateCategary";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
+import { BiSolidAddToQueue } from "react-icons/bi";
 
 function Sidebar() {
   return (
@@ -61,6 +62,8 @@ function Sidebar() {
                   className="nav-link text-dark px-1 fs-7"
                   aria-current="page"
                 >
+                  
+                  <BiSolidAddToQueue />
                   <i className="bi bi-file-plus"></i>Add Customer
                   {/*<li className="nav-item mt-5">
                 <Link to="#billsSubMenu" 

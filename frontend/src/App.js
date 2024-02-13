@@ -21,7 +21,7 @@ import InvoicePage from './Pages/InvoicePage';
 
 import Home from './Pages/home';
 
-import Invoicedrop from './Pages/invoicedrop';
+//import Invoicedrop from './Pages/invoicedrop';
  
 
 
@@ -101,10 +101,10 @@ const App = () => {
       },
 
 
-      {
-        path: "/invoicedrop",
-        element: <Invoicedrop />
-      },
+      // {
+      //   path: "/invoicedrop",
+      //   element: <Invoicedrop />
+      // },
 
       // {
       //   path: "/test",
