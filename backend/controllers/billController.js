@@ -159,9 +159,9 @@ exports.billAddController = async (req, res) => {
                             const customerPhone = "Phone: " + customerData[0].mobile;
 
                             // Full total, advance payment, remaining payment
-                            const fullTotal = total.toFixed(2); // Replace with your own calculation
-                            const advancePayment = advance.toFixed(2); // Replace with your own calculation
-                            const remainingPayment = available_balance.toFixed(2);
+                            const fullTotal = parseFloat(total).toFixed(2); // Replace with your own calculation
+                            const advancePayment = parseFloat(advance).toFixed(2); // Replace with your own calculation
+                            const remainingPayment = parseFloat(available_balance).toFixed(2);
 
                             // Thank you message
                             const thankYouMessage = "Thank you, Come again!";

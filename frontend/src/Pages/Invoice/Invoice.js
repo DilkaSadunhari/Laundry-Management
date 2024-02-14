@@ -171,9 +171,9 @@ const Invoice = () => {
       available_balance: balance,
       items: items.map(item => ({
         category_id: selectedCategoryId, // Replace with the actual category ID
-        price_per_unit: item.price,
-        qty: item.quantity,
-        total: item.totalPrice
+        price_per_unit: item.price.toFixed(2),
+        qty: item.quantity.toFixed(2),
+        total: item.totalPrice.toFixed(2)
       }))
     };
 
