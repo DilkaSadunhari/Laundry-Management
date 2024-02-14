@@ -138,7 +138,7 @@ exports.billAddController = async (req, res) => {
 
                             // Address
                             const address1 = "No.264, Bandarnayaka Mawatha,";
-                            const address2 = "Katubedaa, Moratuwa";
+                            const address2 = "Katubedda, Moratuwa";
 
                             // Mobile numbers
                             const mobileNumber1 = "Tel: 070 61 61 064";
@@ -159,9 +159,9 @@ exports.billAddController = async (req, res) => {
                             const customerPhone = "Phone: " + customerData[0].mobile;
 
                             // Full total, advance payment, remaining payment
-                            const fullTotal = total; // Replace with your own calculation
-                            const advancePayment = advance; // Replace with your own calculation
-                            const remainingPayment = available_balance;
+                            const fullTotal = total.toFixed(2); // Replace with your own calculation
+                            const advancePayment = advance.toFixed(2); // Replace with your own calculation
+                            const remainingPayment = available_balance.toFixed(2);
 
                             // Thank you message
                             const thankYouMessage = "Thank you, Come again!";
@@ -254,9 +254,9 @@ exports.billAddController = async (req, res) => {
                                     .align("ct")
                                     .text("-".repeat(48))
                                     .style("B")
-                                    .text(`Total Amount: ${fullTotal.toFixed(2)}`)
-                                    .text(`Advance Payment: ${advancePayment.toFixed(2)}`)
-                                    .text(`Remaining Balance: ${remainingPayment.toFixed(2)}`)
+                                    .text(`Total Amount: ${fullTotal}`)
+                                    .text(`Advance Payment: ${advancePayment}`)
+                                    .text(`Remaining Balance: ${remainingPayment}`)
                                     .style("NORMAL")
                                     .text("-".repeat(48))
                                     .text(thankYouMessage)
