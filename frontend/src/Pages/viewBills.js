@@ -14,26 +14,26 @@ const ViewBills = () => {
   const [selectedInvoice, setSelectedInvoice] = useState('');
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make API call using Axios
-        const response = await axios.get('http://localhost:8000/bill/getAllInvoiceNumbers');
-        const data = response.data;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make API call using Axios
+  //       const response = await axios.get('http://localhost:8000/bill/getAllInvoiceNumbers');
+  //       const data = response.data;
 
-        if (data.error) {
-          console.error(data.error);
-        } else {
-          // Update the state with the fetched data
-          setInvoiceNumbers(data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //       if (data.error) {
+  //         console.error(data.error);
+  //       } else {
+  //         // Update the state with the fetched data
+  //         setInvoiceNumbers(data);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const filteredInvoiceNumbers = invoiceNumbers.filter(item => String(item.id).includes(filter));
 
@@ -45,23 +45,23 @@ const ViewBills = () => {
   const [filterText, setFilterText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:8000/bill/getAllMobileNumbers')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Server returned ${response.status} ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setMobileNumbers(data);
-        setFilteredOptions(data);
-      })
-      .catch(error => {
-        console.error('Error fetching mobile numbers:', error);
-        setError(error.message);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:8000/bill/getAllMobileNumbers')
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`Server returned ${response.status} ${response.statusText}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       setMobileNumbers(data);
+  //       setFilteredOptions(data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching mobile numbers:', error);
+  //       setError(error.message);
+  //     });
+  // }, []);
 
   const handleMobileSelection = (selectedMobile) => {
     setSelectedMobile(selectedMobile);
@@ -124,6 +124,7 @@ const ViewBills = () => {
     })
       .then(response => {
         setMobileNumbers(response.data);
+        setFilteredOptions(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -133,6 +134,7 @@ const ViewBills = () => {
     })
       .then(response => {
         setInvoiceIds(response.data);
+        setInvoiceNumbers(response.data);
       })
       .catch(error => {
         console.log(error);

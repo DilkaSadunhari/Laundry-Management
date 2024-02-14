@@ -14,7 +14,9 @@ const InvoicePage = () => {
     //-----------------------------------------fetching customer details------------------------------------------------------------------------------
     const fetchMainDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/'+invoice_id);
+        const response = await axios.get('http://localhost:8000/bill/getOrderMainDetails/' + invoice_id, {
+          withCredentials: true,
+        });
         setMainDetails(response.data[0]);
 
         console.log(response.data);
@@ -25,7 +27,9 @@ const InvoicePage = () => {
 //--------------------------------------------fetching table data-------------------------------------------------------------------------------
     const fetchItemDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/bill/getOrderItemDetails/'+invoice_id);
+        const response = await axios.get('http://localhost:8000/bill/getOrderItemDetails/' + invoice_id, {
+          withCredentials: true,
+        });
         setItemDetails(response.data);
        
       } catch (error) {
@@ -49,6 +53,19 @@ const InvoicePage = () => {
 
   if (!mainDetails || !itemDetails) {
     return <div>Error fetching invoice details</div>;
+  }
+
+  const settle=()=>{
+    axios.get('http://localhost:8000/bill/billSettle/' + invoice_id, {
+      withCredentials: true,
+    }
+).then((res)=>{
+      alert(res.data);
+      console.log(res.data);
+      window.location.reload();
+    }).catch((err)=>{
+      console.log(err);
+    })
   }
 
 
@@ -98,10 +115,11 @@ const InvoicePage = () => {
         <p><strong>Total:</strong> Rs{mainDetails.total}</p>
         <p><strong>Advance:</strong> Rs{mainDetails.advance}</p>
         <p><strong>Available Balance:</strong> Rs{mainDetails.available_balance}</p>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button className="btn btn-primary settle-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Settle</button>
-      </div>
+        </div>
+        {mainDetails.available_balance > 0 && (<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button className="btn btn-primary settle-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} onClick={()=>settle()}>Settle</button>
+        </div>)}
+    
       <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
         <Link to="/viewbills" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
       </div>
