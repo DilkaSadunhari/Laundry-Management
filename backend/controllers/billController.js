@@ -145,7 +145,7 @@ exports.billAddController = async (req, res) => {
                             const mobileNumber2 = "Tel: 078 61 61 064";
 
                             // Working hours
-                            const workingHours = "Working Hours: Mon-Sun 7am-6pm";
+                            const workingHours = "Working Hours: Mon-Sun 7.30am-6.30pm";
 
                             // Invoice details
                             const invoiceNumber = "Invoice No: " + orderMainId;
