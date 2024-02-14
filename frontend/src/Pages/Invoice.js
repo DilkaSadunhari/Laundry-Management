@@ -1,17 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-
-//import { Dropdown, FormControl } from 'react-bootstrap';
-//import { ToastContainer, toast } from 'react-toastify';
-//import FilterDropdown from '../Components/FilterDropdown';
-
-
-
 import {  Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-bootstrap';
-
 import { useFormik } from 'formik';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -45,7 +36,7 @@ const Invoice = () => {
   const [filteredOptionsHome, setFilteredOptionsHome] = useState([]);
   const [updateSuccessHome, setUpdateSuccessHome] = useState(false);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState(null);
-
+  const[customer_id,setCustomerId]=useState(null);
   useEffect(() => {
     axios.get('http://localhost:8000/customer/getAllMobileNumbers') // Replace with your actual API endpoint
       .then(response => {
@@ -360,9 +351,6 @@ return (
       <div>
       <Form className="custom-form" onSubmit={formikHome.handleSubmit}>
         <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
-          <Form.Label column sm={5}>
-            Phone Number:
-          </Form.Label>
           <Col sm={7}>
             <div>
               <Dropdown onSelect={handleSelectHome}>
@@ -467,7 +455,7 @@ return (
         <h6 style={{marginBottom:'15px'}}>Current Date: {currentDate}</h6>
         <h6 style={{marginBottom:'5px'}}>Current Time: {currentTime}</h6>
       </div>
-      <div style={{position:'absolute' ,right:'30px'}}>
+      <div style={{position:'absolute' ,right:'100px'}}>
           
           <div className='row'>
             <div className='col'>
@@ -496,31 +484,15 @@ return (
               onChange={handleTimeChange}
               style={{ width: '100%' }}
             />
-
             </div>
           </div>
-          
-           
-      
-      
     </div>
       </div>
 
-      {/* {selectedCustomerDetails && (
-  <div>
-    <h3>Selected Customer Details:</h3>
-    <p>ID: {selectedCustomerHome.id}</p>
-    <p>Name: {selectedCustomerDetails.name}</p>
-    <p>Phone Number: {selectedCustomerDetails.mobile}</p>
-    <p>Address: {selectedCustomerDetails.address}</p>
-  </div>
-)} */}
 {/*----------------------------------------------------------------------category must be replace----------------------------------------------- */}
-<div style={{ display: 'flex' }}>
+<div style={{ display: 'flex',marginTop:'20px' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ flex: 1 }}>
-          <p>Select Category :</p>
-        </div>
+        
         {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
         <div style={{ flex: 1 }}>
         <Dropdown onSelect={handleCategorySelect}>
@@ -545,20 +517,14 @@ return (
 
         </div>
       </div>
-      <div style={{ flex: 1 }}>
       
-      </div>
     </div>
 <div>
   
 {/**-------------------------------------------------------------Cat,Type,price,quantity---------------------------------------- */}
-<div className="mb-3" >
-  <div className='row'>
-    <div className='col'>
+<div className="mb-3" style={{marginTop:'20px',marginRight:'500px'}} >
     <div className='row'>
-    <div className="col">
-      
-        <div className="col " style={{marginBottom:'10px'}}>
+        <div className="col ">
           <label style={{ fontWeight: 'bold'}}>Category :</label>
         </div>
         <div className="col">
@@ -571,36 +537,11 @@ return (
             // onKeyPress={handleKeyPress}
           />
         </div>
-      
-    </div>
   </div>
-    </div>
-    <div className='col'>
-    <div className='row'>
-    <div className="col">
-      
-        <div className="col" style={{marginBottom:'10px'}}>
-          <label style={{ fontWeight: 'bold'}}>Type :</label>
-        </div>
+
+
+    <div className="row" style={{marginTop:'10px'}}>
         <div className="col">
-          <input
-            type="text"
-            className="form-control"
-            //placeholder="type"
-            value={selectedCategory.type }
-            onChange={(e) => setType(e.target.value)}
-            // onKeyPress={handleKeyPress}
-          />
-        </div>
-      
-    </div>
-  </div>
-</div>
-<div className='col'>
-<div className='row'>
-    <div className="col">
-      
-        <div className="col"style={{marginBottom:'10px'}}>
           <label style={{ fontWeight: 'bold'}}>Price per Unit :</label>
         </div>
         <div className="col">
@@ -613,16 +554,10 @@ return (
             // onKeyPress={handleKeyPress}
           />
         </div>
-      
     </div>
-  </div>
-</div>
-
-<div className='col'>
-<div className='row'>
-    <div className="col">
-      
-        <div className="col"style={{marginBottom:'10px'}}>
+  
+    <div className="row" style={{marginTop:'10px'}}>
+        <div className="col">
           <label style={{ fontWeight: 'bold'}}>Quantity :</label>
         </div>
         <div className="col">
@@ -635,12 +570,7 @@ return (
             onKeyPress={handleKeyPress}
           />
         </div>
-      
     </div>
-  </div>
-  
-</div>
-</div>
 </div>
 </div>
 
@@ -650,15 +580,13 @@ return (
         
         <div style={{fontWeight: 'bold'}}>Total Price:Rs  {calculateTotalItemPrice()}</div>
 {/*-------------------------------------ADD BUTTON------------------------------------------------------------------------ */}
-        <button className="btn btn-primary mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '50px', marginBottom:'50px', cursor: 'pointer' }}>Add</button>
+        <button className="btn  mt-2" onClick={addItem}style={{ background: 'black', color: 'white', border: 'none', padding: '5px', paddingInline: '30px', borderRadius: '25px', marginTop: '50px', marginBottom:'50px', cursor: 'pointer' }}>Add</button>
 
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
       <table className="table ">
-        
-      
         <thead>
-          <tr style={{ backgroundColor: 'rgb(135, 206, 250)', padding: '20px', borderRadius: '10px' }}>
+          <tr>
             <th>Category</th>
             <th>Price per unit</th>
             <th>Quantity</th>
@@ -689,7 +617,7 @@ return (
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
-    <div style={{ backgroundColor: 'rgb(13, 20, 128)', padding: '10px', borderRadius: '10px' }}>
+    <div style={{ backgroundColor: '#164896', padding: '10px', borderRadius: '10px' }}>
       <div className='row'style={{paddingInline:'10px'}}>
         <div className='col'> 
         <div className='row'>
@@ -705,7 +633,7 @@ return (
             ref={totalPriceRef}
             value={totalAmount}
             readOnly
-            style={{ backgroundColor:'rgb(13, 20, 128)',color: 'white' }}
+            style={{ backgroundColor:'#164896',color: 'white' }}
           />
           </div>
           </div>
@@ -724,7 +652,7 @@ return (
             onChange={handleAdvancedPaymentChange}
             onKeyPress={handleKeyPress}
             placeholder="Enter advanced payment"
-            style={{ backgroundColor:'rgb(13, 20, 128)',color: 'white' }}
+            style={{ backgroundColor:'#164896',color: 'white' }}
           />
         </div>
           </div>
