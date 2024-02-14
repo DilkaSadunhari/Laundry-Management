@@ -13,12 +13,12 @@ function Sidebar() {
     <div
       className=""
       style={{ marginTop:'10px', width: "15%", marginLeft:"",position:'fixed', marginRight: '10px', 
-      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)', height: '700px'
+      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)', height: '900px'
        }}
     >
       
         <div>
-          <div style={{ marginInlineStart: "" }}>
+          <div style={{ marginTop: "10px" }}>
             <h4 className="text-center" style={{ marginTop: "20px" }}>
               DIRTY 2 BEAUTY{" "}
             </h4>
@@ -39,91 +39,42 @@ function Sidebar() {
         <ul
           className="nav nav-pills flex-column"
           id="parentMenu"
-          style={{ marginTop: "30px", marginInlineStart: "20px" }}
+          style={{ marginTop: "30px"}}
         >
           <li className="nav-item my-3">
-            <Link
-              to="#customerSubMenu"
-              className="nav-link text-dark "
-              data-bs-toggle="collapse"
-              aria-current="page"
-            >
-              <h5 className="ms-2">Customer</h5>
-              {/*<i className='bi bi-caret-down'></i>*/}
-            </Link>
-            <ul
-              className=" ms-1 flex-column"
-              id="customerSubMenu"
-              data-bs-parent="#parentMenu"
-            >
+            <div style={{marginInlineStart:"20px"}}>
+              <h5 className="ms-2 text-dark">Customer</h5>
+            </div>
               <ul className="nav-item">
                 <Link
                   to="/addcustomer"
-                  className="nav-link text-dark px-1 fs-7"
-                  aria-current="page"
+                  className="nav-link text-dark fs-7"
                 >
-                  
                   <BiSolidAddToQueue />
                   <i className="bi bi-file-plus"></i>Add Customer
-                  {/*<li className="nav-item mt-5">
-                <Link to="#billsSubMenu" 
-                      className="nav-link text-dark fs-5" 
-                      data-bs-toggle="collapse" 
-                      aria-current='page'
-                      >
-                  
-                  <span className='ms-2'>Bills</span>
-                  <i className='bi bi-caret-down px-5'></i>
-                </Link>
-                <ul className="nav collapse ms-1 flex-column li " id='billsSubMenu' data-bs-parent="#parentMenu">
-                <li className="nav-item">
-                   <Link to="" className="nav-link text-dark px-4 "   aria-current="page">
-                     <i className="bi bi-printer"></i> Print Bill
-                   </Link>
-                </li>
-
-                </ul>
-               </li>*/}
                 </Link>
               </ul>
-            </ul>
           </li>
 
-          <li className="nav-item mb-5">
-            <Link
-              to="#categorySubMenu"
-              className="nav-link text-dark  "
-              data-bs-toggle="collapse"
-              aria-current="page"
-            >
+          <li className="nav-item my-5">
+            <div style={{marginInlineStart:"20px"}}>
               <h5 className="ms-2">Category</h5>
-              {/*<i className='bi bi-caret-down'></i>*/}
-            </Link>
-            <ul
-              className=" ms-1 flex-column"
-              id="categorySubMenu"
-              data-bs-parent="#parentMenu"
-            >
-              <ul className="nav-item">
+            </div>
+            <ul className=" ms-1 flex-column">
                 <Link
                   to="/addcategory"
-                  className="nav-link text-dark px-1 fs-7"
-                  aria-current="page"
-                >
+                  className="nav-link text-dark fs-7">
                   <i className="bi bi-file-plus"></i>Add Category
                 </Link>
-              </ul>
-
-              <ul className="nav-item">
+                </ul>
+              <ul className="nav-item ms-1 flex-column">
                 <Link
                   to="/updatecategary"
-                  className="nav-link text-dark px-1 fs-7"
-                  aria-current="page"
-                >
+                  className="nav-link text-dark  fs-7"
+                  aria-current="page">
                   <i class="bi bi-pencil-square"></i>Update Category
                 </Link>
               </ul>
-            </ul>
           </li>
         </ul>
       </div>
