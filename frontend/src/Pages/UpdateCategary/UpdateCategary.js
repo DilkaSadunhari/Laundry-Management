@@ -8,6 +8,7 @@ import logo from '../../images/logo.png'
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './UpdateCat.css'
 
 
 
@@ -174,20 +175,15 @@ const handleSubmit = async () => {
 
      <div style={{ textAlign: 'center', padding: '10px' }}>
            
-
-       
-
             <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
                 <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
-                    <Form.Label column sm={5}>
-                        Category
-                    </Form.Label>
+                    
                     <Col sm={7}>
                        {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
-                        <div>
+                        <div style={{alignItems:'center',marginInlineStart:'260px'}}>
                         <Dropdown onSelect={handleCategorySelect}>
-                          <Dropdown.Toggle variant="success" id="dropdown-basic">
+                          <Dropdown.Toggle className="custom-dropdown-btn" variant="success" id="dropdown-basic">
                             Select Category
                           </Dropdown.Toggle>
 
@@ -308,7 +304,7 @@ const handleSubmit = async () => {
             </Form>
             <ToastContainer />
             <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
-                  <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
+                  <Link to="/" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
                 </div>
         </div>
 
