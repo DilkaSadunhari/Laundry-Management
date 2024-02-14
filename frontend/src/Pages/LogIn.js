@@ -64,7 +64,7 @@ const handleSubmit = async (e) => {
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
             <div className="p-5" style={{ backgroundColor: 'lightblue', borderRadius: '15px' }}>
-              <h3 className="mb-2 text-center">DIRTY 2 BEAUTY LAUNDRY</h3>
+              <h3 className="mb-2 text-center" style={{fontStyle: 'italic', fontWeight: 800 }}>DIRTY 2 BEAUTY LAUNDRY</h3>
 
               <div className="text-center mb-2">
                  <img src={logo} alt="Company Logo" style={{ maxWidth: '50%', height: 'auto', textAlign: 'center' }} />
@@ -105,7 +105,7 @@ const handleSubmit = async (e) => {
                   <button
                     type="submit"
                     className="btn btn-primary text-dark"
-                    style={{ borderRadius: '15px', textAlign: 'center', width: '100px' }}
+                    style={{ borderRadius: '15px', textAlign: 'center', width: '100px',fontWeight:600 }}
                   >
                     Login
                   </button>

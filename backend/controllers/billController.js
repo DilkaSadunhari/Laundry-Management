@@ -447,12 +447,12 @@ exports.billDeleteController = async (req, res) => {
                 if (err) {
                     return res.json({ error: err });
                 }
-                res.json("Orders Deleted");
+                res.status(200).json("Orders Deleted");
             });
         } catch (error) {
             // Rollback the transaction in case of an error
             db.rollback(() => {
-                res.json({ error: "Transaction failed. Changes rolled back." });
+                res.status(500).json({ error: "Transaction failed. Changes rolled back." });
             });
         }
     });

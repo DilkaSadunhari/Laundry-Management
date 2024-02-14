@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 //import { Link } from 'react-router-dom'; 
 import { Table, Button, Form, Dropdown ,FormControl} from 'react-bootstrap';
-import companyLogo from '../images/logo.png'; 
+import companyLogo from '../../images/logo.png'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //import FilterDropdown from '../Components/FilterDropdown';
 
 
@@ -156,10 +158,14 @@ const ViewBills = () => {
       billIDs: selectedRows
     },{withCredentials: true}).then(response => {
       console.log(response.data);
-      alert(response.data);
-      window.location.reload(true);
+      //alert(response.data);
+      toast.success('Customer deleted successfully');
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 5000);
     }).catch(error => {
       console.log(error);
+      toast.error('Error');
     })
     setSelectedRows([]);
   };
@@ -199,12 +205,12 @@ const ViewBills = () => {
     <div className="container-fluid" style={{ maxWidth: '800px', marginTop:'20px'}}> 
 
   {/* //----------------------------------Header----------------------------------------------------------------------------------------// */}
-      <div className="row align-items-center mb-5">
+      <div className="row  mb-5" style={{alignItems:'center',marginInlineStart:'150px'}}>
         <div className="col-md-auto mb-3 mb-md-0">
           <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
         </div>
         <div className="col-md">
-          <h2>Dirty 2 Beauty Laundry</h2>
+          <h2 style={{fontStyle: 'italic', fontWeight: 800}}>Dirty 2 Beauty Laundry</h2>
         </div>
       </div>
 
@@ -215,15 +221,12 @@ const ViewBills = () => {
         <div className="col-md-6">
           <div className='row gx-2'>
             <div className="col-md-6">
-              <p>Select Invoice ID :</p>
-            </div>
-            <div className="col-md-6">
 
             
       {/* <Form.Group controlId="formInvoice"> */}
         
         <Dropdown>
-          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+          <Dropdown.Toggle className="custom-dropdown-btn" variant="primary" id="dropdown-basic">
             {selectedInvoice || 'Select Invoice'}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -259,15 +262,13 @@ const ViewBills = () => {
         </div>
         <div className="col-md-6">
           <div className='row gx-2'>
-            <div className="col-md-6">
-               <p>Select Phone Number :</p>
-            </div>
+    
             <div className="col-md-6">
 
             <div>
         {error && <p>Error: {error}</p>}
         <Dropdown >
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle className="custom-dropdown-btn" variant="success" id="dropdown-basic">
             {selectedMobile ? selectedMobile : 'Select Mobile Number'}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -300,8 +301,6 @@ const ViewBills = () => {
     {/**-----------------------------View Bills---------------------------------------------------------------------------------------- */}
       
       <div style={{ marginTop:'50px'}} >
-
-        <h5 className=" mb-4">View Bills</h5>
         <div className="col-sm justify-content-end d-flex " style={{ bottom: '20px', right: '20px' }}>
      
            <Button onClick={handleDelete} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginBottom: '10px', cursor: 'pointer' }} block>
@@ -309,7 +308,7 @@ const ViewBills = () => {
            </Button>
         </div>
         <div className="table-responsive">
-            <Table striped bordered hover style={{ maxWidth: '100%' }}> 
+            <Table striped bordered hover style={{ maxWidth: '100%',zIndex:'2',marginBottom:'100px' }}> 
             <thead>
                 <tr>
                     <th></th>
@@ -357,14 +356,14 @@ const ViewBills = () => {
       <div className="row gx-2">
        
 
-        <div className="col-sm  " style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
-            <Button onClick={handleLogout} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
+        <div className="col-sm  " style={{ position:'fixed',alignItems:'baseline', bottom: '20px', left: '20px' }}>
+            <Button onClick={handleLogout} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer'}} block>
               Logout
             </Button>
 
         </div>
       </div>
-
+<ToastContainer/>
     </div>
       
     

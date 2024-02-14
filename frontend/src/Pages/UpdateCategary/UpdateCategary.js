@@ -164,19 +164,19 @@ const handleSubmit = async () => {
 
       <div style={{marginTop:'20px'}}>
          {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
-       <div className="row align-items-center  mb-3" style={{marginLeft:'400px'}}>
+       <div className="row align-items-center  mb-3" style={{marginLeft:'500px'}}>
        <div className="col-md-auto mb-3 mb-md-0 ">
          <img src={logo} alt="Company Logo" style={{ width: '100px' }} />
        </div>
        <div className="col-md ">
-         <h2>Dirty 2 Beauty Laundry</h2>
+         <h2 style={{fontStyle: 'italic', fontWeight: 800}}>Dirty 2 Beauty Laundry</h2>
        </div>
      </div>
 
      <div style={{ textAlign: 'center', padding: '10px' }}>
            
             <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} id="updateCategory" style={{ border: '2px solid #ccc', padding: '50px', borderRadius: '15px',  maxWidth: '800px', margin: 'auto'  }}>
-                <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px'}}>Update Category</h3>
+                <h3 style={{ textAlign: 'center' , marginTop: '0px', marginBottom: '60px',fontStyle: 'italic'}}>Update Category</h3>
                 <Form.Group as={Row} style={{ marginBottom: '60px' }} controlId="formHorizontalName">
                     
                     <Col sm={7}>

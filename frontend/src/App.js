@@ -13,7 +13,7 @@ import AddCategory from './Pages/AddCategory/AddCategory';
 import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
 
 
-import ViewBills from './Pages/viewBills';
+import ViewBills from './Pages/ViewBills/viewBills';
 import Sidebar from "./Components/SideBar/SideBar";
 import Invoice from './Pages/Invoice/Invoice'
 import Login from './Pages/LogIn';

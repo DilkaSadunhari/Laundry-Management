@@ -113,11 +113,11 @@ function AddCustomer() {
           <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
         </div>
         <div className="col-md ">
-          <h2>Dirty 2 Beauty Laundry</h2>
+          <h2 style={{fontStyle: 'italic', fontWeight: 800}}>Dirty 2 Beauty Laundry</h2>
         </div>
       </div>
       <Form className="custom-form" onSubmit={handleSubmit}>
-        <h4 className='text-center mb-3'>Add Customer</h4>
+        <h3 className='text-center mb-3' style={{fontStyle: 'italic',marginBottom:'60px'}}>Add Customer</h3>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
           <Form.Label column sm={3}>
             Name

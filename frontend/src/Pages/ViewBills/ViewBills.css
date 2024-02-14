@@ -1,0 +1,78 @@
+body {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    
+  }
+
+
+
+.custom-form {
+    max-width: 800px;
+    margin: auto;
+    padding: 50px;
+    /* border: 1px solid #ccc; */
+    border-radius: 8px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* font-weight: bold; */
+    
+  }
+  
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    
+  }
+  
+  .red-text {
+    color: rgb(14, 14, 14);
+    background-color: #fcc2c2; /* This is an example background color for red text */
+    padding: 10px; /* Add padding for better visibility */
+    border-radius: 5px; /* Add rounded corners for better appearance */
+  }
+  
+/* 
+  .logo-container {
+    margin-top: auto;
+    margin-left: 550px;
+    margin-bottom: 20px;
+    padding: 50px;
+  }
+
+  .logo {
+    max-width: 100%;
+    height: auto;
+  } */
+  .custom-dropdown-btn {
+    --bs-btn-color: #000; /* Your desired text color */
+    --bs-btn-bg: #aaabac; /* Your desired background color */
+    --bs-btn-border-color: #595858; /* Your desired border color */
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #3b3d3c;
+    --bs-btn-hover-border-color: #303131;
+    --bs-btn-active-bg: #3b3d3c;
+    --bs-btn-active-border-color: #3b3d3c;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #3b3d3c;
+    --bs-btn-disabled-border-color: #3b3d3c;
+    --bs-btn-font-size: 1rem; /* Your desired font size */
+    --bs-btn-font-weight: 700;
+  }
+
+  label {
+    font-size: 1.1rem;
+    font-weight: 700; /* Your desired font weight */
+    display: inline-block;
+}

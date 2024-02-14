@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams,Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //------------------------------------------------------------------connect to back end --------------------------------------------------------//
 const InvoicePage = () => {
@@ -60,11 +62,15 @@ const InvoicePage = () => {
       withCredentials: true,
     }
 ).then((res)=>{
-      alert(res.data);
+      
       console.log(res.data);
-      window.location.reload();
+      toast.success('Bill settled successfully');
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 5000);
     }).catch((err)=>{
       console.log(err);
+      toast.success('Error');
     })
   }
 
@@ -123,6 +129,7 @@ const InvoicePage = () => {
       <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
         <Link to="/viewbills" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
       </div>
+      <ToastContainer/>
     </div>
 
   );

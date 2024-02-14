@@ -34,7 +34,63 @@ const Invoice = () => {
   const [updateSuccessHome, setUpdateSuccessHome] = useState(false);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState(null);
  // const[customer_id,setCustomerId]=useState(null);
-  useEffect(() => {
+ 
+ //---------------------------------- Category dropdown menu---------------------------------------------------
+ const [categories, setCategories] = useState([]);
+ const [selectedCategory, setSelectedCategory] = useState({});
+ const [filterText, setFilterText] = useState('');
+ const [selectedCategoryId, setselectedCategoryId] = useState(null);
+
+    useEffect(() => {
+   // Fetch categories from your backend when the component mounts
+   fetchCategories();
+ }, []);
+
+ const fetchCategories = async () => {
+   try {
+     const response = await fetch('http://localhost:8000/category/getAllNames'); // Update with your backend API endpoint
+     const data = await response.json();
+     console.log('Fetched categories:', data);
+     setCategories(data);
+   } catch (error) {
+     console.error('Error fetching categories:', error);
+   }
+ };
+
+ const handleCategorySelect = async (categoryId) => {
+   try {
+     const response = await fetch(`http://localhost:8000/category/get/${categoryId}`);
+     setselectedCategoryId(categoryId);
+     
+     if (!response.ok) {
+       throw new Error(`HTTP error! Status: ${response.status}`);
+     }
+ 
+     const data = await response.json();
+     console.log('Category Data:', data);
+     setSelectedCategory(data);
+     setPrice(data.price);
+     setCategory(data.name);
+   } catch (error) {
+     console.error('Error fetching category data:', error);
+   }
+ };
+ 
+
+ const handleFilterChange = (e) => {
+   setFilterText(e.target.value);
+ };
+
+ const filteredCategories = categories.filter((category) =>
+   category.name.toLowerCase().includes(filterText.toLowerCase())
+ );
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+ 
+ 
+ useEffect(() => {
     axios.get('http://localhost:8000/customer/getAllMobileNumbers') // Replace with your actual API endpoint
       .then(response => {
         console.log(response);
@@ -142,21 +198,21 @@ const Invoice = () => {
   };
 
   const handlePrint =  async() => {
-
-    let errorMessage = '';
-  
     if (!deliveryDate || !deliveryTime) {
-      errorMessage += 'Please enter delivery date and time. ';
+      
+      toast.error('Please enter delivery date and time');
+      return;
     }
   
     if (!balance || balance === '0') {
-      errorMessage += 'Please calculate invoice balance. ';
-    }
-  
-    if (errorMessage !== '') {
-      setErrorMessage(errorMessage);
+      toast.error('Please calculate invoice balance.');
       return;
     }
+    if (selectedCustomerHome ===null) {
+      toast.error('Please select customer');
+      return;
+    }
+
     
     // Prepare data for the request
     const [month, day, year] = currentDate.split('/');
@@ -175,7 +231,9 @@ const Invoice = () => {
         qty: item.quantity.toFixed(2),
         total: item.totalPrice.toFixed(2)
       }))
+     
     };
+    
 
     try {
       // Send POST request to the backend API
@@ -190,7 +248,7 @@ const Invoice = () => {
     }
     setTimeout(() => {
       window.location.reload();
-    }, 20000);
+    }, 5000);
      // 45000 milliseconds = 45 seconds
   };
 
@@ -251,6 +309,7 @@ const Invoice = () => {
     setType('');
     setPrice('');
     setQuantity('');
+    setSelectedCategory('');
   };
 
   const deleteItem = (index) => {
@@ -285,61 +344,6 @@ const Invoice = () => {
     setBalance(calculatedBalance.toFixed(2));
   };
   
-
-
-  //---------------------------------- Category dropdown menu---------------------------------------------------
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({});
-  const [filterText, setFilterText] = useState('');
-  const [selectedCategoryId, setselectedCategoryId] = useState(null);
-
-     useEffect(() => {
-    // Fetch categories from your backend when the component mounts
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/category/getAllNames'); // Update with your backend API endpoint
-      const data = await response.json();
-      console.log('Fetched categories:', data);
-      setCategories(data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
-
-  const handleCategorySelect = async (categoryId) => {
-    try {
-      const response = await fetch(`http://localhost:8000/category/get/${categoryId}`);
-      setselectedCategoryId(categoryId);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      console.log('Category Data:', data);
-      setSelectedCategory(data);
-      setPrice(data.price);
-      setCategory(data.name);
-    } catch (error) {
-      console.error('Error fetching category data:', error);
-    }
-  };
-  
-
-  const handleFilterChange = (e) => {
-    setFilterText(e.target.value);
-  };
-
-  const filteredCategories = categories.filter((category) =>
-    category.name.toLowerCase().includes(filterText.toLowerCase())
-  );
-
-
-//-------------------------------------------------------------------------------------------------------------
- 
 return (
   
     <div className="container mt-4">
@@ -433,7 +437,7 @@ return (
 
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 8, offset: 4 }}>
-            <Button type="submit" className="custom-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>UPDATE</Button>
+            <Button type="submit" className="custom-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '20px', marginBottom: '20px', cursor: 'pointer' }}>Update</Button>
           </Col>
         </Form.Group>
       </Form>
@@ -490,7 +494,7 @@ return (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
         {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1 ,alignItems:'center'}}>
         <Dropdown onSelect={handleCategorySelect}>
         <Dropdown.Toggle  className="custom-dropdown-btn" variant="success" id="dropdown-basic">
           Select Category
@@ -560,7 +564,6 @@ return (
           <input
             type="text"
             className="form-control"
-            placeholder="Quantity"
             value={ quantity}
             onChange={(e) => setQuantity(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -613,8 +616,8 @@ return (
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
-    <div style={{ backgroundColor: '#164896', padding: '10px', borderRadius: '10px',marginTop:'20px' }}>
-      <div className='row'style={{paddingInline:'10px'}}>
+    <div style={{ backgroundColor: '#2568B4', padding: '10px',paddingInline:'20px', borderRadius: '10px',marginTop:'20px' }}>
+      <div className='row'style={{paddingInline:'10px',marginTop:'20px'}}>
         <div className='col'> 
         <div className='row'>
           <div className='col '>
@@ -654,7 +657,7 @@ return (
           </div>
         </div>
         <div className='col' style={{marginTop:'40px',display: 'flex', justifyContent: 'flex-end' }}>
-        <button onClick={calculateBalance} style={{ background: 'rgb(135, 206, 235)', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Balance</button>
+        <button onClick={calculateBalance} style={{ background: 'rgb(135, 206, 235)', color: 'black', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer',fontWeight:700 }}>Balance</button>
         </div> 
 
         <div >

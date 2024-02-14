@@ -24,7 +24,7 @@ function Sidebar() {
             <h4 className="text-center" style={{ fontStyle: 'italic', fontWeight: 800 , marginTop: '20px'}}>
               DIRTY 2 BEAUTY{" "}
             </h4>
-            <h4 className="text-center" style={{ marginInlineStart: "" , fontStyle: 'italic', fontWeight: 800 , marginTop: '20px'}}>
+            <h4 className="text-center" style={{ marginInlineStart: "" , fontStyle: 'italic', fontWeight: 800 , marginTop: '5px'}}>
               LAUNDRY{" "}
             </h4>
           </div>
