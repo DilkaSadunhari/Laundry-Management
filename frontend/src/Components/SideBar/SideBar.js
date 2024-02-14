@@ -51,7 +51,7 @@ function Sidebar() {
                   className="nav-link text-dark fs-7"
                 >
                   <BiSolidAddToQueue />
-                  <i className="bi bi-file-plus"></i>Add Customer
+                  <i className=""></i>Add Customer
                 </Link>
               </ul>
           </li>
@@ -64,7 +64,7 @@ function Sidebar() {
                 <Link
                   to="/addcategory"
                   className="nav-link text-dark fs-7">
-                  <i className="bi bi-file-plus"></i>Add Category
+                  <i className=""></i>Add Category
                 </Link>
                 </ul>
               <ul className="nav-item ms-1 flex-column">
@@ -72,7 +72,7 @@ function Sidebar() {
                   to="/updatecategary"
                   className="nav-link text-dark  fs-7"
                   aria-current="page">
-                  <i class="bi bi-pencil-square"></i>Update Category
+                  <i class=""></i>Update Category
                 </Link>
               </ul>
           </li>

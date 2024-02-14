@@ -5,13 +5,10 @@ import {  Form, Row, Col, Dropdown, FormControl, Button, Alert } from 'react-boo
 import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
+import './Invoice.css';
 
 const Invoice = () => {
  
-
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
@@ -36,7 +33,7 @@ const Invoice = () => {
   const [filteredOptionsHome, setFilteredOptionsHome] = useState([]);
   const [updateSuccessHome, setUpdateSuccessHome] = useState(false);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState(null);
-  const[customer_id,setCustomerId]=useState(null);
+ // const[customer_id,setCustomerId]=useState(null);
   useEffect(() => {
     axios.get('http://localhost:8000/customer/getAllMobileNumbers') // Replace with your actual API endpoint
       .then(response => {
@@ -111,15 +108,15 @@ const Invoice = () => {
             setUpdateSuccessHome(true);
             // Optionally, update the displayed details after a successful update
             setCustomerDetailsHome({ ...selectedCustomerHome, ...values });
-           // toast.success('Customer updated successfully!');
+           toast.success('Customer updated successfully!');
           })
           .catch(error => {
             console.error('Error updating customer:', error);
-            //toast.error('Failed to update customer. Please try again.');
+            toast.error('Failed to update customer. Please try again.');
           });
       } else {
         console.error('Phone number cannot be null');
-        //toast.error('Phone number cannot be null');
+        toast.error('Phone number cannot be null');
       }
     }
   };
@@ -161,7 +158,6 @@ const Invoice = () => {
       return;
     }
     
-   // window.location.reload();
     // Prepare data for the request
     const [month, day, year] = currentDate.split('/');
     const requestData = {
@@ -185,16 +181,18 @@ const Invoice = () => {
       // Send POST request to the backend API
       const response = await axios.post('http://localhost:8000/bill/add', requestData);
       console.log(response.data); // Log response from the server
-      toast.success('Bill Print successfully');
+      //toast.success('Bill Print successfully');
       setErrorMessage(''); // Clear error message if successful
     } catch (error) {
       console.error('Error adding bill:', error);
       setErrorMessage('Error adding bill. Please try again.'); // Display error message if request fails
-      toast.error('Error adding bill. Please try again.');
+      //toast.error('Error adding bill. Please try again.');
     }
+    setTimeout(() => {
+      window.location.reload();
+    }, 45000);
+     // 45000 milliseconds = 45 seconds
   };
-
-  
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -342,11 +340,6 @@ const Invoice = () => {
 return (
   
     <div className="container mt-4">
-
-
-      
-
-      
 {/* ----------------Customer Details-------------- */}
       <div>
       <Form className="custom-form" onSubmit={formikHome.handleSubmit}>
@@ -354,7 +347,7 @@ return (
           <Col sm={7}>
             <div>
               <Dropdown onSelect={handleSelectHome}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                <Dropdown.Toggle className="custom-dropdown-btn" variant="success" id="dropdown-basic">
                   {selectedCustomerHome ? selectedCustomerHome.mobile : 'Select Mobile Number'}
                 </Dropdown.Toggle>
 
@@ -441,7 +434,7 @@ return (
           </Col>
         </Form.Group>
       </Form>
-      <ToastContainer />
+      
     </div>
 
       {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
@@ -496,7 +489,7 @@ return (
         {/* -------------------------------------categoryFilterDropdown-------------------------------------- */}
         <div style={{ flex: 1 }}>
         <Dropdown onSelect={handleCategorySelect}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <Dropdown.Toggle  className="custom-dropdown-btn" variant="success" id="dropdown-basic">
           Select Category
         </Dropdown.Toggle>
 
@@ -584,7 +577,7 @@ return (
 
 
 {/*---------------------------------------Table---------------------------------------------------------------------------------------------------- */}
-      <table className="table ">
+      <table className="table " >
         <thead>
           <tr>
             <th>Category</th>
@@ -617,7 +610,7 @@ return (
       </div>
 
 {/*-----------------------------------------------calculate Balance------------------------------------------------------------------------------ */}
-    <div style={{ backgroundColor: '#164896', padding: '10px', borderRadius: '10px' }}>
+    <div style={{ backgroundColor: '#164896', padding: '10px', borderRadius: '10px',marginTop:'20px' }}>
       <div className='row'style={{paddingInline:'10px'}}>
         <div className='col'> 
         <div className='row'>
@@ -678,6 +671,6 @@ return (
       
 
   );
-};
+          };
 
 export default Invoice;
