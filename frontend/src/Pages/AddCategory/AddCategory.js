@@ -90,6 +90,7 @@ const handleSubmit = async (e) => {
      </div>
 
     <Form className="custom-form" onSubmit={handleSubmit}>
+    <h4 className='text-center mb-3'>Add Category</h4>
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
         <Form.Label column sm={2}>
           Name

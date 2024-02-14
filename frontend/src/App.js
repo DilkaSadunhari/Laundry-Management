@@ -15,7 +15,7 @@ import UpdateCategary from './Pages/UpdateCategary/UpdateCategary';
 
 import ViewBills from './Pages/viewBills';
 import Sidebar from "./Components/SideBar/SideBar";
-import Invoice from './Pages/Invoice'
+import Invoice from './Pages/Invoice/Invoice'
 import Login from './Pages/LogIn';
 import InvoicePage from './Pages/InvoicePage';
 
