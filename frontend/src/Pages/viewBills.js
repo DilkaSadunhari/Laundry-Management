@@ -46,7 +46,7 @@ const ViewBills = () => {
   const [filteredOptions, setFilteredOptions] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/customer/getAllMobileNumbers')
+    fetch('http://localhost:8000/bill/getAllMobileNumbers')
       .then(response => {
         if (!response.ok) {
           throw new Error(`Server returned ${response.status} ${response.statusText}`);
@@ -137,7 +137,7 @@ const ViewBills = () => {
       .catch(error => {
         console.log(error);
       });
-  },[]);
+  },[selectedRows]);
 
   const handleCheckboxChange = (e, id) => {
     if (e.target.checked) {
@@ -149,8 +149,16 @@ const ViewBills = () => {
   };
 
   const handleDelete = () => {
-    const newData = data.filter(item => !selectedRows.includes(item.id));
-    setData(newData);
+   
+    axios.post('http://localhost:8000/bill/delete', {
+      billIDs: selectedRows
+    },{withCredentials: true}).then(response => {
+      console.log(response.data);
+      alert(response.data);
+      window.location.reload(true);
+    }).catch(error => {
+      console.log(error);
+    })
     setSelectedRows([]);
   };
 
@@ -238,11 +246,11 @@ const ViewBills = () => {
         </Dropdown>
       {/* </Form.Group> */}
 
-      {selectedInvoice && (
+      {/* {selectedInvoice && (
         <div>
           <p>Selected Invoice ID: {selectedInvoice}</p>
         </div>
-      )}
+      )} */}
 
             </div>
           </div> 
@@ -276,11 +284,11 @@ const ViewBills = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      {selectedCustomerId && (
+      {/* {selectedCustomerId && (
         <div style={{ marginTop: '10px' }}>
           <p>Selected Customer ID: {selectedCustomerId}</p>
         </div>
-      )}
+      )} */}
 
              </div>
           </div> 
