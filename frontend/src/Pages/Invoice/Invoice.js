@@ -161,8 +161,8 @@ const Invoice = () => {
     // Prepare data for the request
     const [month, day, year] = currentDate.split('/');
     const requestData = {
-      customer_id: 1, // Replace with the actual customer ID
-     received_date: `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`,
+      customer_id: selectedCustomerHome.id, // Replace with the actual customer ID
+      received_date: `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`,
       received_time: currentTime, // Format received time
       delivery_date:deliveryDate,
       delivery_time:deliveryTime,
@@ -170,7 +170,7 @@ const Invoice = () => {
       advance: advancedPayment,
       available_balance: balance,
       items: items.map(item => ({
-        category_id: 1, // Replace with the actual category ID
+        category_id: selectedCategoryId, // Replace with the actual category ID
         price_per_unit: item.price,
         qty: item.quantity,
         total: item.totalPrice
@@ -181,16 +181,16 @@ const Invoice = () => {
       // Send POST request to the backend API
       const response = await axios.post('http://localhost:8000/bill/add', requestData);
       console.log(response.data); // Log response from the server
-      //toast.success('Bill Print successfully');
+      toast.success('Bill Print successfully');
       setErrorMessage(''); // Clear error message if successful
     } catch (error) {
       console.error('Error adding bill:', error);
       setErrorMessage('Error adding bill. Please try again.'); // Display error message if request fails
-      //toast.error('Error adding bill. Please try again.');
+      toast.error('Error adding bill. Please try again.');
     }
     setTimeout(() => {
       window.location.reload();
-    }, 45000);
+    }, 20000);
      // 45000 milliseconds = 45 seconds
   };
 
@@ -290,6 +290,7 @@ const Invoice = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const [filterText, setFilterText] = useState('');
+  const [selectedCategoryId, setselectedCategoryId] = useState(null);
 
      useEffect(() => {
     // Fetch categories from your backend when the component mounts
@@ -310,6 +311,7 @@ const Invoice = () => {
   const handleCategorySelect = async (categoryId) => {
     try {
       const response = await fetch(`http://localhost:8000/category/get/${categoryId}`);
+      setselectedCategoryId(categoryId);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
