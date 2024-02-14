@@ -292,6 +292,12 @@ const ViewBills = () => {
       <div style={{ marginTop:'50px'}} >
 
         <h5 className=" mb-4">View Bills</h5>
+        <div className="col-sm justify-content-end d-flex " style={{ bottom: '20px', right: '20px' }}>
+     
+           <Button onClick={handleDelete} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginBottom: '10px', cursor: 'pointer' }} block>
+              Delete
+           </Button>
+        </div>
         <div className="table-responsive">
             <Table striped bordered hover style={{ maxWidth: '100%' }}> 
             <thead>
@@ -339,12 +345,7 @@ const ViewBills = () => {
       {/**------------------------------------------------Button Row--------------------------------------------------------------------------- */}
 
       <div className="row gx-2">
-        <div className="col-sm justify-content-end d-flex " style={{ bottom: '20px', right: '20px' }}>
-     
-            <Button onClick={handleDelete} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>
-              Delete
-            </Button>
-        </div>
+       
 
         <div className="col-sm  " style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
             <Button onClick={handleLogout} style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }} block>

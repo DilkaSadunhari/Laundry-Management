@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
 //------------------------------------------------------------------connect to back end --------------------------------------------------------//
 const InvoicePage = () => {
   const [mainDetails, setMainDetails] = useState(null);
   const [itemDetails, setItemDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const { invoice_id } = useParams();
 
   useEffect(() => {
@@ -100,8 +99,14 @@ const InvoicePage = () => {
         <p><strong>Advance:</strong> Rs{mainDetails.advance}</p>
         <p><strong>Available Balance:</strong> Rs{mainDetails.available_balance}</p>
       </div>
-      <button className="btn btn-primary settle-button d-flex justify-content-end" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Settle</button>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button className="btn btn-primary settle-button" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', cursor: 'pointer' }}>Settle</button>
+      </div>
+      <div className="position-absolute bottom-0 start-0 mb-3 ms-3">
+        <Link to="/viewbills" className="btn btn-secondary" style={{ background: 'black', color: 'white', border: 'none', padding: '10px', paddingInline: '30px', borderRadius: '25px', marginTop: '10px', marginLeft: '20px', cursor: 'pointer' }}>Back</Link>
+      </div>
     </div>
+
   );
 };
 
