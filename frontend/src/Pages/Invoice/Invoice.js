@@ -170,7 +170,7 @@ const Invoice = () => {
       advance: advancedPayment,
       available_balance: balance,
       items: items.map(item => ({
-        category_id: selectedCategoryId, // Replace with the actual category ID
+        category_id: item.category_id, // Replace with the actual category ID
         price_per_unit: item.price.toFixed(2),
         qty: item.quantity.toFixed(2),
         total: item.totalPrice.toFixed(2)
@@ -239,6 +239,7 @@ const Invoice = () => {
     const newItem = {
       category,
       type,
+      category_id: selectedCategoryId,
       price: parseFloat(price),
       quantity: parseFloat(quantity),
       totalPrice,
