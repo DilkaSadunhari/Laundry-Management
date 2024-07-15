@@ -52,7 +52,7 @@ body {
 
   .logo-container {
     margin-top: auto;
-    margin-left: 550px;
+    /* margin-left: 550px; */
     margin-bottom: 20px;
     padding: 50px;
   }
@@ -60,5 +60,6 @@ body {
   .logo {
     max-width: 100%;
     height: auto;
+    justify-content: center;
   }
   

@@ -108,13 +108,17 @@ function AddCustomer() {
 
     <div className="container align-items-center " style={{marginTop:'20px'}}>
       {/*/----------------------------------Header----------------------------------------------------------------------------------------/*/}
-      <div className="row align-items-center  mb-3" style={{marginLeft:'350px'}}>
-        <div className="col-md-auto mb-3 mb-md-0 ">
-          <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
-        </div>
-        <div className="col-md ">
-          <h2 style={{fontStyle: 'italic', fontWeight: 800}}>Dirty 2 Beauty Laundry</h2>
-        </div>
+      <div className="row align-items-center justify-content-center mb-3">
+      <div className="row justify-content-center">
+  <div className="col-md-auto mb-3 mb-md-0 text-center">
+    <img src={companyLogo} alt="Company Logo" style={{ width: '100px' }} />
+  </div>
+</div>
+  <div className="col-md text-center">
+    <h2 style={{ fontStyle: 'italic', fontWeight: 800 }}>Dirty 2 Beauty Laundry</h2>
+  </div>
+
+
       </div>
       <Form className="custom-form" onSubmit={handleSubmit}>
         <h3 className='text-center mb-3' style={{fontStyle: 'italic',marginBottom:'60px'}}>Add Customer</h3>

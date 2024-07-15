@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-//import { Link } from 'react-router-dom'; 
 import { Table, Button, Form, Dropdown ,FormControl} from 'react-bootstrap';
 import companyLogo from '../../images/logo.png'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-//import FilterDropdown from '../Components/FilterDropdown';
+
 
 
 const ViewBills = () => {
@@ -16,27 +15,7 @@ const ViewBills = () => {
   const [selectedInvoice, setSelectedInvoice] = useState('');
   const [filter, setFilter] = useState('');
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // Make API call using Axios
-  //       const response = await axios.get('http://localhost:8000/bill/getAllInvoiceNumbers');
-  //       const data = response.data;
-
-  //       if (data.error) {
-  //         console.error(data.error);
-  //       } else {
-  //         // Update the state with the fetched data
-  //         setInvoiceNumbers(data);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  
   const filteredInvoiceNumbers = invoiceNumbers.filter(item => String(item.id).includes(filter));
 
   //--------------------------Mobile numbers dropdown------------------------------------------
@@ -47,23 +26,7 @@ const ViewBills = () => {
   const [filterText, setFilterText] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:8000/bill/getAllMobileNumbers')
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error(`Server returned ${response.status} ${response.statusText}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       setMobileNumbers(data);
-  //       setFilteredOptions(data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching mobile numbers:', error);
-  //       setError(error.message);
-  //     });
-  // }, []);
+ 
 
   const handleMobileSelection = (selectedMobile) => {
     setSelectedMobile(selectedMobile);
@@ -94,20 +57,12 @@ const ViewBills = () => {
 
 
 
-//   const [data, setData] = useState([
-//     { id: 1, invoiceId: 1, customerId: 101, customerName: 'John Doe', total: 100 },
-//     { id: 2, invoiceId: 2, customerId: 102, customerName: 'Jane Smith', total: 200 },
-//     { id: 3, invoiceId: 3, customerId: 107, customerName: 'Hana', total: 800 },
-//     // Add more data as needed
-//   ]);
 
-// const ViewBills = () => {
   const [data, setData] = useState([]);
 
   const [selectedRows, setSelectedRows] = useState([]);
   const [invoiceId, setInvoiceId] = useState('');
   const [customerId, setCustomerId] = useState('');
-  //const [mobileNumbers, setMobileNumbers] = useState([]);
   const[invoiceIds,setInvoiceIds] = useState([]);
   
 
@@ -158,7 +113,6 @@ const ViewBills = () => {
       billIDs: selectedRows
     },{withCredentials: true}).then(response => {
       console.log(response.data);
-      //alert(response.data);
       toast.success('Customer deleted successfully');
       setTimeout(() => {
         window.location.reload(true);
@@ -198,7 +152,7 @@ const ViewBills = () => {
 
   //must replace--------------------------
 
-  //const options = ['0716589457', '077894521789', '076985423'];
+  
 
   return (
 
@@ -249,13 +203,7 @@ const ViewBills = () => {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-      {/* </Form.Group> */}
-
-      {/* {selectedInvoice && (
-        <div>
-          <p>Selected Invoice ID: {selectedInvoice}</p>
-        </div>
-      )} */}
+      
 
             </div>
           </div> 
@@ -287,11 +235,7 @@ const ViewBills = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      {/* {selectedCustomerId && (
-        <div style={{ marginTop: '10px' }}>
-          <p>Selected Customer ID: {selectedCustomerId}</p>
-        </div>
-      )} */}
+      
 
              </div>
           </div> 
